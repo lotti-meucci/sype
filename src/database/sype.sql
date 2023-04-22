@@ -13,14 +13,16 @@ CREATE TABLE word
 CREATE TABLE user
 (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nickname VARCHAR(20) NOT NULL UNIQUE
+  nickname VARCHAR(20) NOT NULL UNIQUE,
+  hash VARCHAR(255) NOT NULL,
+  picture_url VARCHAR(255)
 );
 
 CREATE TABLE difficulty
 (
   id INT PRIMARY KEY,
   description VARCHAR(255) NOT NULL UNIQUE,
-  n_words INT NOT NULL UNIQUE
+  words_n INT NOT NULL UNIQUE
 );
 
 INSERT INTO difficulty VALUES
@@ -31,9 +33,11 @@ INSERT INTO difficulty VALUES
 CREATE TABLE game
 (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  id_user INT NOT NULL,
-  id_difficulty INT NOT NULL,
+  user_id INT NOT NULL,
+  difficulty_id INT NOT NULL,
   datetime DATETIME NOT NULL DEFAULT NOW(),
-  FOREIGN KEY (id_user) REFERENCES user(id),
-  FOREIGN KEY (id_difficulty) REFERENCES difficulty(id)
+  result FLOAT NOT NULL,
+  errors_n INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (difficulty_id) REFERENCES difficulty(id)
 );

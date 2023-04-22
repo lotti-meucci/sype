@@ -6,8 +6,8 @@
 
 **word**(<ins>id</ins>, text);\
 **user**(<ins>id</ins>, nickname, hash, picture_url);\
-**difficulty**(<ins>level</ins>, description, words_n);\
-**game**(<ins>id</ins>, user_id*, difficulty_level*, datetime, result, errors_n);
+**difficulty**(<ins>id</ins>, description, words_n);\
+**game**(<ins>id</ins>, user_id*, difficulty_id*, datetime, result, errors_n);
 
 ## JSON API (PHP)
 

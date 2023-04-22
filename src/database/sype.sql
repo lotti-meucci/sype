@@ -15,7 +15,7 @@ CREATE TABLE user
   id INT PRIMARY KEY AUTO_INCREMENT,
   nickname VARCHAR(20) NOT NULL UNIQUE,
   hash VARCHAR(255) NOT NULL,
-  picture_url VARCHAR(255)
+  picture_uri VARCHAR(255)
 );
 
 CREATE TABLE difficulty

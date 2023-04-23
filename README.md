@@ -1,6 +1,7 @@
 # Sype!
 
 
+
 ## Abstract
 
 _Sype!_ is a typing test client-server application for web browsers.
@@ -12,6 +13,8 @@ _Sype!_ consists of 4 components:
 - **Frontend**: Angular (HTML/CSS/TS)
 
 ![ER model](./sype.png)
+
+
 
 ## Database (MariaDB)
 
@@ -43,15 +46,16 @@ _game_(**id**, user_id*, difficulty_id*, datetime, result, errors_n)
 > **Non-idempotent operations**: POST
 
 ### Routes
-| Route                         | Methods                 | Description                                     |
-|-------------------------------|-------------------------|-------------------------------------------------|
-| /users.php?user=_nickname_    | PUT, GET, PATCH, DELETE | Create, get, modify and delete users            |
-| /login.php                    | POST                    | Log in                                          |
-| /pictures.php?user=_nickname_ | PUT, GET, PATCH, DELETE | Create, get, modify and delete profile pictures |
-| /difficulties.php             | GET                     | Get difficulties informations                   |
-| /words.php?difficulty=_level_ | GET                     | Get a random set of words by difficulty         |
-| /games.php?user=_nickname_    | PUT, GET                | Create new games and get games by user          |
-| /rankings.php                 | GET                     | Get rankings for each difficulty                |
+| Route                         | Methods                 | Description                                     | Type |
+|-------------------------------|-------------------------|-------------------------------------------------|------|
+| /users.php?user=_nickname_    | PUT, GET, PATCH, DELETE | Create, get, modify and delete users            | JSON |
+| /login.php                    | POST                    | Log in                                          | JSON |
+| /logout.php                   | POST                    | Log out                                         | JSON |
+| /pictures.php?user=_nickname_ | PUT, GET, PATCH, DELETE | Create, get, modify and delete profile pictures | PNG  |
+| /difficulties.php             | GET                     | Get difficulties informations                   | JSON |
+| /words.php?difficulty=_level_ | GET                     | Get a random set of words by difficulty         | JSON |
+| /games.php?user=_nickname_    | PUT, GET                | Create new games and get games by user          | JSON |
+| /rankings.php                 | GET                     | Get rankings for each difficulty                | JSON |
 
 
 

@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . './classes.php';
+
 const OK = 200;
 const CREATED = 201;
 const BAD_REQUEST = 400;
@@ -29,7 +31,7 @@ function get_json_body()
   $body = json_decode(file_get_contents('php://input'));
 
   if (!$body)
-    send_json(new ErrorResponse('Body is not valid JSON'), BAD_REQUEST);
+    send_json(new ErrorResponse('Request body is not valid JSON'), BAD_REQUEST);
 
   return $body;
 }

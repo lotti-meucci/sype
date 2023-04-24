@@ -1,16 +1,20 @@
 <?php
 
-const ER_DUP_ENTRY = 1062;
-$db;
+require_once __DIR__ . './requests.php';
 
-try
+const ER_DUP_ENTRY = 1062;
+
+function get_database()
 {
-  $db = new mysqli('localhost', 'root', '', 'sype');
-}
-catch (Exception)
-{
-  http_response_code(INTERNAL_SERVER_ERROR);
-  exit;
+  try
+  {
+    return new mysqli('localhost', 'root', '', 'sype');
+  }
+  catch (Exception)
+  {
+    http_response_code(INTERNAL_SERVER_ERROR);
+    exit;
+  }
 }
 
 function fetch_objects($result)

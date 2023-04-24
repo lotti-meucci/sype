@@ -1,6 +1,8 @@
 <?php
 
-include './init.php';
+require_once __DIR__ . './includes/init.php';
+require_once __DIR__ . './includes/database.php';
+require_once __DIR__ . './includes/requests.php';
 
 if ($_SERVER['REQUEST_METHOD'] != "GET")
 {
@@ -8,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] != "GET")
   exit;
 }
 
+$db = get_database();
 $stmt = get_difficulties_stmt($db);
 $stmt->execute();
 send_json(fetch_objects($stmt->get_result()), OK);

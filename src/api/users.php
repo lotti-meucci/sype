@@ -1,6 +1,9 @@
 <?php
 
-include './init.php';
+require_once __DIR__ . './includes/init.php';
+require_once __DIR__ . './includes/classes.php';
+require_once __DIR__ . './includes/database.php';
+require_once __DIR__ . './includes/requests.php';
 
 function check_nickname($body)
 {
@@ -33,6 +36,8 @@ function check_password($body)
   if (strlen($body->password) == 0)
     send_json(new ErrorResponse('"password" cannot be empty'), BAD_REQUEST);
 }
+
+$db = get_database();
 
 switch ($_SERVER['REQUEST_METHOD'])
 {

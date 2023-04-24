@@ -1,6 +1,9 @@
 <?php
 
-include './init.php';
+require_once __DIR__ . './includes/init.php';
+require_once __DIR__ . './includes/classes.php';
+require_once __DIR__ . './includes/database.php';
+require_once __DIR__ . './includes/requests.php';
 
 if ($_SERVER['REQUEST_METHOD'] != "POST")
 {
@@ -22,6 +25,7 @@ if (!isset($body->nickname))
 if (!isset($body->password))
   send_json(new ErrorResponse('"password" attribute is not defined'), BAD_REQUEST);
 
+$db = get_database();
 $stmt = get_hash_stmt($db);
 $nickname = $body->nickname;
 

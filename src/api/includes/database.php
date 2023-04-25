@@ -1,10 +1,13 @@
 <?php
 
+require_once __DIR__ . './init.php';
 require_once __DIR__ . './requests.php';
 
-const ER_DUP_ENTRY = 1062;
+// Database errors.
+const ER_DUP_ENTRY = 1062;  // Duplicate error.
 
-function get_database()
+// Returns a database connection after checking for errors.
+function get_database(): mysqli
 {
   try
   {
@@ -17,7 +20,8 @@ function get_database()
   }
 }
 
-function fetch_objects($result)
+// Fetches every row as an object into an array.
+function fetch_objects(mysqli_result $result): array
 {
   $array = [];
 
@@ -27,37 +31,69 @@ function fetch_objects($result)
   return $array;
 }
 
-function create_user_stmt($db)
+// Executes a statement and catches exceptions.
+// The error code will pass to "$on_error" (callable).
+function safe_execute(mysqli_stmt $stmt, ?callable $on_error = null): void
+{
+  try
+  {
+    $stmt->execute();
+  }
+  catch (mysqli_sql_exception $e)
+  {
+    if ($on_error)
+      $on_error($e->getCode());
+
+    http_response_code(INTERNAL_SERVER_ERROR);
+    exit;
+  }
+}
+
+
+/*
+  Database statements.
+  These functions return query objects (statements) which can be run on the database.
+  Statements may need some parameter to be bound.
+*/
+
+// Params: nickname (string), hash (string).
+function create_user_stmt(mysqli $db): mysqli_stmt
 {
   return $db->prepare('INSERT INTO user(nickname, hash) VALUES (?, ?)');
 }
 
-function get_nicknames_stmt($db)
+// Params: nickname_pattern (string).
+function get_nicknames_stmt(mysqli $db): mysqli_stmt
 {
   return $db->prepare('SELECT nickname FROM user WHERE nickname LIKE ?');
 }
 
-function modify_nickname_stmt($db)
+// Params: new_nickname (string), old_nickname (string).
+function modify_nickname_stmt(mysqli $db): mysqli_stmt
 {
   return $db->prepare('UPDATE user SET nickname = ? WHERE nickname = ?');
 }
 
-function modify_hash_stmt($db)
+// Params: hash (string), nickname (string).
+function modify_hash_stmt(mysqli $db): mysqli_stmt
 {
   return $db->prepare('UPDATE user SET hash = ? WHERE nickname = ?');
 }
 
-function get_hash_stmt($db)
+// Params: nickname (string).
+function get_hash_stmt(mysqli $db): mysqli_stmt
 {
   return $db->prepare('SELECT hash FROM user WHERE nickname = ?');
 }
 
-function delete_user_stmt($db)
+// Params: nickname (string)
+function delete_user_stmt(mysqli $db): mysqli_stmt
 {
   return $db->prepare('DELETE FROM user WHERE nickname = ?');
 }
 
-function get_difficulties_stmt($db)
+// No params.
+function get_difficulties_stmt(mysqli $db): mysqli_stmt
 {
   return $db->prepare('SELECT id level, description, words_n wordsNumber FROM difficulty');
 }

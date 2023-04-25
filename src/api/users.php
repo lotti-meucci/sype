@@ -5,46 +5,20 @@ require_once __DIR__ . './includes/classes.php';
 require_once __DIR__ . './includes/database.php';
 require_once __DIR__ . './includes/requests.php';
 
-function check_nickname($body)
-{
-  if (!isset($body->nickname))
-    send_json(new ErrorResponse('"nickname" attribute is not defined'), BAD_REQUEST);
-
-  if (gettype($body->nickname) != 'string')
-    send_json(new ErrorResponse('"nickname" attribute must be a string'), BAD_REQUEST);
-
-  if (preg_match('([ \t\n\r\0\x0B])', $body->nickname))
-    send_json(new ErrorResponse('"nickname" attribute must not contain spaces'), BAD_REQUEST);
-
-  if (strlen($body->nickname) < 1 || strlen($body->nickname) > 20)
-  {
-    send_json(
-      new ErrorResponse('"nickname" length must be greater than 0 and less or equal to 20'),
-      BAD_REQUEST
-    );
-  }
-}
-
-function check_password($body)
-{
-  if (!isset($body->password))
-    send_json(new ErrorResponse('"password" attribute is not defined'), BAD_REQUEST);
-
-  if (gettype($body->password) != 'string')
-    send_json(new ErrorResponse('"password" attribute must be a string'), BAD_REQUEST);
-
-  if (strlen($body->password) == 0)
-    send_json(new ErrorResponse('"password" cannot be empty'), BAD_REQUEST);
-}
-
 $db = get_database();
 
+// Allowed methods: PUT, GET, PATCH, DELETE.
 switch ($_SERVER['REQUEST_METHOD'])
 {
   case 'PUT':
+    // Validates the body ("nickname" and "password").
     $body = get_json_body();
     check_nickname($body);
     check_password($body);
+
+
+    // Adds the new user to the database.
+
     $stmt = create_user_stmt($db);
     $nickname = $body->nickname;
     $hash = password_hash($body->password, PASSWORD_DEFAULT);
@@ -52,45 +26,48 @@ switch ($_SERVER['REQUEST_METHOD'])
     if (!$stmt->bind_param('ss', $nickname, $hash))
       send_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
 
-    try
+    safe_execute($stmt, function(int $code)
     {
-      $stmt->execute();
-    }
-    catch (mysqli_sql_exception $e)
-    {
-      if ($e->getCode() == ER_DUP_ENTRY)
-        send_json(new ErrorResponse('"nickname" already in use'), CONFLICT);
+      // If the nickname is already in use, sends an error.
 
-      http_response_code(INTERNAL_SERVER_ERROR);
-      exit;
-    }
+      if ($code == ER_DUP_ENTRY)
+        send_json(new ErrorResponse('"nickname" already in use'), CONFLICT);
+    });
 
     http_response_code(CREATED);
     exit;
 
   case 'GET':
     check_login();
+
+    // Creates a SQL LIKE pattern using the "user" URL param.
     $pattern = '%' . ($_GET['user'] ?? '') . '%';
+
+
+    // Retrives the users from the database.
+
     $stmt = get_nicknames_stmt($db);
 
     if (!$stmt->bind_param('s', $pattern))
       send_json([], OK);
 
-    $stmt->execute();
+    safe_execute($stmt);
     $response = fetch_objects($stmt->get_result());
 
     send_json($response, OK);
-    break;
+    exit;
 
   case 'PATCH':
     check_login();
 
+    // The "user" URL param is required.
     if (!isset($_GET['user']))
     {
       http_response_code(BAD_REQUEST);
       exit;
     }
 
+    // The "user" URL param must be equal to the currently logged-in user.
     if ($_GET['user'] != $_SESSION['user'])
     {
       http_response_code(FORBIDDEN);
@@ -99,9 +76,15 @@ switch ($_SERVER['REQUEST_METHOD'])
 
     $body = get_json_body();
 
+    // Renaming the user.
     if (isset($body->nickname))
     {
+      // Validates the new nickname.
       check_nickname($body);
+
+
+      // Modifies the nickname on the database.
+
       $stmt = modify_nickname_stmt($db);
       $new = $body->nickname;
       $old = $_SESSION['user'];
@@ -109,25 +92,28 @@ switch ($_SERVER['REQUEST_METHOD'])
       if (!$stmt->bind_param('ss', $new, $old))
         send_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
 
-      try
+      safe_execute($stmt, function(int $code)
       {
-        $stmt->execute();
-      }
-      catch (mysqli_sql_exception $e)
-      {
-        if ($e->getCode() == ER_DUP_ENTRY)
+        // If the nickname is already in use, sends an error.
+
+        if ($code == ER_DUP_ENTRY)
           send_json(new ErrorResponse('"nickname" already in use'), CONFLICT);
+      });
 
-        http_response_code(INTERNAL_SERVER_ERROR);
-        exit;
-      }
 
+      // Changes the nickname of the logged-in user.
       $_SESSION['user'] = $new;
     }
 
+    // Changing password.
     if (isset($body->password))
     {
+      // Validates the new password.
       check_password($body);
+
+
+      // Modifies the password on the database by updating the hash.
+
       $stmt = modify_hash_stmt($db);
       $nickname = $_SESSION['user'];
       $hash = password_hash($body->password, PASSWORD_DEFAULT);
@@ -135,52 +121,42 @@ switch ($_SERVER['REQUEST_METHOD'])
       if (!$stmt->bind_param('ss', $hash, $nickname))
         send_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
 
-      try
-      {
-        $stmt->execute();
-      }
-      catch (mysqli_sql_exception $e)
-      {
-        http_response_code(INTERNAL_SERVER_ERROR);
-        exit;
-      }
+      safe_execute($stmt);
     }
 
+    // Closes the request.
     http_response_code(OK);
     exit;
 
   case 'DELETE':
     check_login();
 
+    // The "user" URL param is required.
     if (!isset($_GET['user']))
     {
       http_response_code(BAD_REQUEST);
       exit;
     }
 
+    // The "user" URL param must be equal to the currently logged-in user.
     if ($_GET['user'] != $_SESSION['user'])
     {
       http_response_code(FORBIDDEN);
       exit;
     }
 
+    // Deletes the user from the database.
     $stmt = delete_user_stmt($db);
     $stmt->bind_param('s', $_SESSION['user']);
+    safe_execute($stmt);
 
-    try
-    {
-      $stmt->execute();
-    }
-    catch (mysqli_sql_exception $e)
-    {
-      http_response_code(INTERNAL_SERVER_ERROR);
-      exit;
-    }
-
+    // Logs out.
     session_unset();
-    break;
+    http_response_code(OK);
+    exit;
 
   default:
+    header("Allow: PUT, GET, PATCH, DELETE");
     http_response_code(METHOD_NOT_ALLOWED);
     exit;
 }

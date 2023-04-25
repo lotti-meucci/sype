@@ -96,7 +96,7 @@ function check_password(object $body): void
     send_json(new ErrorResponse('"password" cannot be empty'), BAD_REQUEST);
 }
 
-// Checks if the logged-in user is authorized for certain http methods
+// Checks if the logged-in user is the owner of the resource ("user" URL param). MAY EXIT.
 function check_ownership(): void
 {
   // The "user" URL param is required.

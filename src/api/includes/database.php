@@ -6,7 +6,7 @@ require_once __DIR__ . './requests.php';
 // Database errors.
 const ER_DUP_ENTRY = 1062;  // Duplicate error.
 
-// Returns a database connection after checking for errors.
+// Returns a database connection after checking for errors. MAY EXIT.
 function get_database(): mysqli
 {
   try
@@ -31,7 +31,7 @@ function fetch_objects(mysqli_result $result): array
   return $array;
 }
 
-// Executes a statement and catches exceptions.
+// Executes a statement and catches exceptions. MAY EXIT.
 // The error code will pass to "$on_error" (callable).
 function safe_execute(mysqli_stmt $stmt, ?callable $on_error = null): void
 {

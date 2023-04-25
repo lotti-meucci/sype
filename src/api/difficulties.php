@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . './includes/init.php';
-require_once __DIR__ . './includes/database.php';
-require_once __DIR__ . './includes/requests.php';
+require_once __DIR__ . '/includes/init.php';
+require_once __DIR__ . '/includes/database.php';
+require_once __DIR__ . '/includes/requests.php';
 
 // Allowed methods: GET.
 if ($_SERVER['REQUEST_METHOD'] != "GET")

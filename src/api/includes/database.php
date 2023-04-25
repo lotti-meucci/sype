@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . './init.php';
-require_once __DIR__ . './requests.php';
+require_once __DIR__ . '/init.php';
+require_once __DIR__ . '/requests.php';
 
 // Database errors.
 const ER_DUP_ENTRY = 1062;  // Duplicate error.
@@ -11,7 +11,25 @@ function get_database(): mysqli
 {
   try
   {
-    return new mysqli('localhost', 'root', '', 'sype');
+    $config = null;
+    $json = file_get_contents(__DIR__ . '/../config/database.json');
+
+    if ($json)
+      $config = json_decode($json);
+
+    $host = null;
+    $password = null;
+
+    if ($config)
+    {
+      if (isset($config->host) && gettype($config->host) == "string")
+        $host = $config->host;
+
+      if (isset($config->password) && gettype($config->password) == "string")
+        $password = $config->password;
+    }
+
+    return new mysqli($host ?? 'localhost', 'root', $password ?? '', 'sype');
   }
   catch (Exception)
   {

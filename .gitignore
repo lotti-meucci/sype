@@ -1,0 +1,3 @@
+docker/MARIADB_ROOT_PASSWORD.env
+docker/mariadb
+src/api/config/database.json

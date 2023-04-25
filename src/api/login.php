@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . './includes/init.php';
-require_once __DIR__ . './includes/classes.php';
-require_once __DIR__ . './includes/database.php';
-require_once __DIR__ . './includes/requests.php';
+require_once __DIR__ . '/includes/init.php';
+require_once __DIR__ . '/includes/classes.php';
+require_once __DIR__ . '/includes/database.php';
+require_once __DIR__ . '/includes/requests.php';
 
 // Allowed methods: POST.
 if ($_SERVER['REQUEST_METHOD'] != "POST")

@@ -4,7 +4,7 @@
     This file must be included as first instruction in every PHP file.
   */
 
-  require_once __DIR__ . './requests.php';
+  require_once __DIR__ . '/requests.php';
 
   // Removes the "Content-Type" header from the response.
   header('Content-Type:');

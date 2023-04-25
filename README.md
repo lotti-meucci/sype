@@ -1,5 +1,9 @@
 # Sype!
 
+## Running the project
+
+Run `./run.sh.ps1` to build and host the project with docker.
+
 
 
 ## Abstract

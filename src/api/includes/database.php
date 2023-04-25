@@ -98,4 +98,10 @@ function get_difficulties_stmt(mysqli $db): mysqli_stmt
   return $db->prepare('SELECT id level, description, words_n wordsNumber FROM difficulty');
 }
 
+// Params: picture_uri (string), nickname (string).
+function modify_profile_uri(mysqli $db): mysqli_stmt
+{
+  return $db->prepare('UPDATE user SET picture_uri = ? WHERE nickname = ?');
+}
+
 ?>

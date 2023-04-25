@@ -50,6 +50,7 @@ function check_login(): void
   if (!isset($_SESSION['user']))
   {
     header('WWW-Authenticate: SypeLogin realm="Access to Sype"');
+    http_response_code(UNAUTHORIZED);
     exit;
   }
 }
@@ -96,7 +97,7 @@ function check_password(object $body): void
 }
 
 // Checks if the logged-in user is authorized for certain http methods
-function check_url(): void
+function check_ownership(): void
 {
   // The "user" URL param is required.
   if (!isset($_GET['user']))

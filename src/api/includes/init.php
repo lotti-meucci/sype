@@ -1,7 +1,7 @@
 <?php
   /*
     Request initialization.
-    This file must be included in every route.
+    This file must be included as first instruction in every PHP file.
   */
 
   require_once __DIR__ . './requests.php';

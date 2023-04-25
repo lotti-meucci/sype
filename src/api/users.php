@@ -59,9 +59,7 @@ switch ($_SERVER['REQUEST_METHOD'])
 
   case 'PATCH':
     check_login();
-
-    check_url();
-
+    check_ownership();
     $body = get_json_body();
 
     // Renaming the user.
@@ -118,8 +116,7 @@ switch ($_SERVER['REQUEST_METHOD'])
 
   case 'DELETE':
     check_login();
-
-    check_url();
+    check_ownership();
 
     // Deletes the user from the database.
     $stmt = delete_user_stmt($db);

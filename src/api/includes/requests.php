@@ -95,4 +95,22 @@ function check_password(object $body): void
     send_json(new ErrorResponse('"password" cannot be empty'), BAD_REQUEST);
 }
 
+// Checks if the logged-in user is authorized for certain http methods
+function check_url(): void
+{
+  // The "user" URL param is required.
+  if (!isset($_GET['user']))
+  {
+    http_response_code(BAD_REQUEST);
+    exit;
+  }
+
+  // The "user" URL param must be equal to the currently logged-in user.
+  if ($_GET['user'] != $_SESSION['user'])
+  {
+    http_response_code(FORBIDDEN);
+    exit;
+  }
+}
+
 ?>

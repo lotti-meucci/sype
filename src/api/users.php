@@ -60,19 +60,7 @@ switch ($_SERVER['REQUEST_METHOD'])
   case 'PATCH':
     check_login();
 
-    // The "user" URL param is required.
-    if (!isset($_GET['user']))
-    {
-      http_response_code(BAD_REQUEST);
-      exit;
-    }
-
-    // The "user" URL param must be equal to the currently logged-in user.
-    if ($_GET['user'] != $_SESSION['user'])
-    {
-      http_response_code(FORBIDDEN);
-      exit;
-    }
+    check_url();
 
     $body = get_json_body();
 
@@ -131,19 +119,7 @@ switch ($_SERVER['REQUEST_METHOD'])
   case 'DELETE':
     check_login();
 
-    // The "user" URL param is required.
-    if (!isset($_GET['user']))
-    {
-      http_response_code(BAD_REQUEST);
-      exit;
-    }
-
-    // The "user" URL param must be equal to the currently logged-in user.
-    if ($_GET['user'] != $_SESSION['user'])
-    {
-      http_response_code(FORBIDDEN);
-      exit;
-    }
+    check_url();
 
     // Deletes the user from the database.
     $stmt = delete_user_stmt($db);

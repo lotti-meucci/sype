@@ -2,7 +2,7 @@
 
 USE sype;
 
-INSERT INTO word(text) VALUES
+INSERT IGNORE INTO word(text) VALUES
   ("abacus"),
   ("abdomen"),
   ("abdominal"),

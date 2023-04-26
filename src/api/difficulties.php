@@ -20,6 +20,6 @@ $stmt = get_difficulties_stmt($db);
 safe_execute($stmt);
 
 // Sends the difficulties back.
-send_json(fetch_objects($stmt->get_result()), OK);
+exit_json(fetch_objects($stmt->get_result()), OK);
 
 ?>

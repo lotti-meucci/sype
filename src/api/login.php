@@ -33,7 +33,7 @@ $stmt = get_hash_stmt($db);
 $nickname = $body->nickname;
 
 if (!$stmt->bind_param('s', $nickname))
-  send_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
+  exit_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
 
 safe_execute($stmt);
 $result = $stmt->get_result()->fetch_object();

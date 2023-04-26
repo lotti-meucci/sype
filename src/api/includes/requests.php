@@ -16,7 +16,7 @@ const UNSUPPORTED_MEDIA_TYPE = 415;
 const INTERNAL_SERVER_ERROR = 500;
 
 // Serializes the given data in JSON format into the body. DOES EXIT.
-function send_json(mixed $data, int $code): void
+function exit_json(mixed $data, int $code): void
 {
   header('Content-Type: application/json; charset=utf-8');
   http_response_code($code);
@@ -38,7 +38,7 @@ function get_json_body(): object
 
   // Body null check.
   if (!$body)
-    send_json(new ErrorResponse('Request body is not valid JSON'), BAD_REQUEST);
+    exit_json(new ErrorResponse('Request body is not valid JSON'), BAD_REQUEST);
 
   return $body;
 }
@@ -60,20 +60,20 @@ function check_nickname(object $body): void
 {
   // Existence check.
   if (!isset($body->nickname))
-    send_json(new ErrorResponse('"nickname" attribute is not defined'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"nickname" attribute is not defined'), BAD_REQUEST);
 
   // Type check (must be a string).
   if (gettype($body->nickname) != 'string')
-    send_json(new ErrorResponse('"nickname" attribute must be a string'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"nickname" attribute must be a string'), BAD_REQUEST);
 
   // Spaces check.
   if (preg_match('([ \t\n\r\0\x0B])', $body->nickname))
-    send_json(new ErrorResponse('"nickname" attribute must not contain spaces'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"nickname" attribute must not contain spaces'), BAD_REQUEST);
 
   // Length check (0 < x <= 20).
   if (strlen($body->nickname) < 1 || strlen($body->nickname) > 20)
   {
-    send_json(
+    exit_json(
       new ErrorResponse('"nickname" length must be greater than 0 and less or equal to 20'),
       BAD_REQUEST
     );
@@ -85,15 +85,15 @@ function check_password(object $body): void
 {
   // Existence check.
   if (!isset($body->password))
-    send_json(new ErrorResponse('"password" attribute is not defined'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"password" attribute is not defined'), BAD_REQUEST);
 
   // Type check (must be a string).
   if (gettype($body->password) != 'string')
-    send_json(new ErrorResponse('"password" attribute must be a string'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"password" attribute must be a string'), BAD_REQUEST);
 
   // Length check (x > 0).
   if (strlen($body->password) <= 0)
-    send_json(new ErrorResponse('"password" cannot be empty'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"password" cannot be empty'), BAD_REQUEST);
 }
 
 // Checks if the logged-in user is the owner of the resource ("user" URL param). MAY EXIT.

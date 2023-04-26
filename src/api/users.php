@@ -24,14 +24,14 @@ switch ($_SERVER['REQUEST_METHOD'])
     $hash = password_hash($body->password, PASSWORD_DEFAULT);
 
     if (!$stmt->bind_param('ss', $nickname, $hash))
-      send_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
+      exit_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
 
     safe_execute($stmt, function(int $code)
     {
       // If the nickname is already in use, sends an error.
 
       if ($code == ER_DUP_ENTRY)
-        send_json(new ErrorResponse('"nickname" already in use'), CONFLICT);
+        exit_json(new ErrorResponse('"nickname" already in use'), CONFLICT);
     });
 
     http_response_code(CREATED);
@@ -49,12 +49,12 @@ switch ($_SERVER['REQUEST_METHOD'])
     $stmt = get_nicknames_stmt($db);
 
     if (!$stmt->bind_param('s', $pattern))
-      send_json([], OK);
+      exit_json([], OK);
 
     safe_execute($stmt);
     $response = fetch_objects($stmt->get_result());
 
-    send_json($response, OK);
+    exit_json($response, OK);
     exit;
 
   case 'PATCH':
@@ -76,14 +76,14 @@ switch ($_SERVER['REQUEST_METHOD'])
       $old = $_SESSION['user'];
 
       if (!$stmt->bind_param('ss', $new, $old))
-        send_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
+        exit_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
 
       safe_execute($stmt, function(int $code)
       {
         // If the nickname is already in use, sends an error.
 
         if ($code == ER_DUP_ENTRY)
-          send_json(new ErrorResponse('"nickname" already in use'), CONFLICT);
+          exit_json(new ErrorResponse('"nickname" already in use'), CONFLICT);
       });
 
 
@@ -105,7 +105,7 @@ switch ($_SERVER['REQUEST_METHOD'])
       $hash = password_hash($body->password, PASSWORD_DEFAULT);
 
       if (!$stmt->bind_param('ss', $hash, $nickname))
-        send_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
+        exit_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
 
       safe_execute($stmt);
     }

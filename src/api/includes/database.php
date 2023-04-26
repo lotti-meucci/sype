@@ -122,4 +122,21 @@ function modify_profile_uri(mysqli $db): mysqli_stmt
   return $db->prepare('UPDATE user SET picture_uri = ? WHERE nickname = ?');
 }
 
+// Params: user_id (integer), difficulty_id (integer), result (decimal), errors_n (integer).
+function create_game_stmt(mysqli $db): mysqli_stmt
+{
+  return $db->prepare('INSERT INTO game(
+                         user_id,
+                         difficulty_id,
+                         result,
+                         errors_n
+                       ) VALUES (?, ?, ?, ?)');
+}
+
+// Params: nickname (string).
+function get_user_id_stmt(mysqli $db): mysqli_stmt
+{
+  return $db->prepare('SELECT id FROM user WHERE nickname = ?');
+}
+
 ?>

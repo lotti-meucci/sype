@@ -57,8 +57,9 @@ _game_(**id**, user_id*, difficulty_id*, datetime, result, errors_n)
 | /logout.php                   | POST                    | Log out                                         | JSON |
 | /pictures.php?user=_nickname_ | PUT, GET, PATCH, DELETE | Create, get, modify and delete profile pictures | PNG  |
 | /difficulties.php             | GET                     | Get difficulties informations                   | JSON |
-| /words.php?difficulty=_level_ | GET                     | Get a random set of words by difficulty         | JSON |
-| /games.php?user=_nickname_    | PUT, GET                | Create new games and get games by user          | JSON |
+| /startGame.php                | POST                    | Starts a new game by sending a random word list | JSON |
+| /endGame.php                  | POST                    | Ends a started game                             | JSON |
+| /games.php?user=_nickname_    | GET                     | Get games by user                               | JSON |
 | /rankings.php                 | GET                     | Get rankings for each difficulty                | JSON |
 
 

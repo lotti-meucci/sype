@@ -139,4 +139,16 @@ function get_user_id_stmt(mysqli $db): mysqli_stmt
   return $db->prepare('SELECT id FROM user WHERE nickname = ?');
 }
 
+// Params: difficulty.id (integer)
+function get_rankings_by_difficulty (mysqli $db): mysqli_stmt
+{
+  return $db->prepare('SELECT u.nickname, d.description, g.datetime, g.result, g.errors_n
+                       FROM game g
+                       JOIN difficulty d ON d.id = g.difficulty_id
+                       JOIN user u ON u.id = g.user_id
+                       WHERE d.id = ?
+                       ORDER BY g.result, g.errors
+                       LIMIT 10');
+}
+
 ?>

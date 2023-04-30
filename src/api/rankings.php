@@ -11,22 +11,22 @@ if ($_SERVER['REQUEST_METHOD'] != "GET")
   exit;
 }
 
-check_login();
 
+check_login();
 $db = get_database();
 
-//need to be modified, this is a placeholder only for tests
-$difficulty_id = 1;
+$body = get_json_body();
+$difficulty_id = $body->difficulty_id;
 
 // Retrives the rankings from the database.
 $stmt = get_rankings_by_difficulty($db);
 
 if (!$stmt->bind_param('i', $difficulty_id))
-  exit_json([], OK);
+  exit_json(new ErrorResponse('"difficulty_id" attribute is not valid'), BAD_REQUEST);
 
 safe_execute($stmt);
-$response = fetch_objects($stmt->get_result());
 
-exit_json($response, OK);
-
+//sends the rankings back
+exit_json(fetch_objects($stmt->get_result()), OK);
+exit;
 ?>

@@ -14,7 +14,7 @@ INSERT IGNORE INTO word(text) VALUES
   ("abnormal"),
   ("abrasion"),
   ("abrasive"),
-  ( "abreast"),
+  ("abreast"),
   ("abridge"),
   ("abroad"),
   ("abruptly"),

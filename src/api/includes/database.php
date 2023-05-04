@@ -139,19 +139,23 @@ function get_user_id_stmt(mysqli $db): mysqli_stmt
   return $db->prepare('SELECT id FROM user WHERE nickname = ?');
 }
 
-// Params: difficulty.id (integer)
+// Params: (2) difficulty_id (integer)
 function get_rankings(mysqli $db): mysqli_stmt
 {
-  // NOT WORKING!!!
-  return $db->prepare('SELECT *
-                       FROM (SELECT u.nickname, g.datetime, g.result, g.errors_n
+  $scoreFunction = '(g.result + 2 * g.errors_n + POWER(g.errors_n, 1.25))';
+
+  return $db->prepare("SELECT u.nickname, g.datetime, g.result, g.errors_n errorsNumber
+                       FROM game g
+                       JOIN difficulty d ON d.id = g.difficulty_id
+                       JOIN user u ON u.id = g.user_id
+                       JOIN (SELECT u.id, MIN($scoreFunction) score
                              FROM game g
                              JOIN difficulty d ON d.id = g.difficulty_id
                              JOIN user u ON u.id = g.user_id
                              WHERE d.id = ?
-                             ORDER BY g.result + g.errors_n * 2 + POWER(g.errors_n, 2)
-                             LIMIT NULL) X
-                       GROUP BY nickname');
+                             GROUP BY u.id) s ON s.id = u.id
+                       WHERE d.id = ? AND $scoreFunction = s.score
+                       ORDER BY s.score");
 }
 
 ?>

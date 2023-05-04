@@ -7778,4 +7778,4 @@ INSERT IGNORE INTO word(text) VALUES
   ("zookeeper"),
   ("zoologist"),
   ("zoology"),
-  ("zoom")
+  ("zoom");

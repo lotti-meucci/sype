@@ -6,6 +6,9 @@
 
   require_once __DIR__ . '/requests.php';
 
+  // Prevents error reports from echoing.
+  error_reporting(0);
+
   // Removes the "Content-Type" header from the response.
   header('Content-Type:');
 

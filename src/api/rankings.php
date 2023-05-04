@@ -22,7 +22,7 @@ if (!isset($_GET['difficulty']) || !ctype_digit($_GET['difficulty']))
 
 // Retrives the rankings from the database.
 $db = get_database();
-$stmt = get_rankings($db);
+$stmt = get_rankings_stmt($db);
 $id = $_GET['difficulty'];
 
 if (!$stmt->bind_param('ii', $id, $id))

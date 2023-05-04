@@ -116,12 +116,6 @@ function get_difficulties_stmt(mysqli $db): mysqli_stmt
   return $db->prepare('SELECT id level, description, words_n wordsNumber FROM difficulty');
 }
 
-// Params: picture_uri (string), nickname (string).
-function modify_profile_uri(mysqli $db): mysqli_stmt
-{
-  return $db->prepare('UPDATE user SET picture_uri = ? WHERE nickname = ?');
-}
-
 // Params: user_id (integer), difficulty_id (integer), result (decimal), errors_n (integer).
 function create_game_stmt(mysqli $db): mysqli_stmt
 {
@@ -140,7 +134,7 @@ function get_user_id_stmt(mysqli $db): mysqli_stmt
 }
 
 // Params: (2) difficulty_id (integer)
-function get_rankings(mysqli $db): mysqli_stmt
+function get_rankings_stmt(mysqli $db): mysqli_stmt
 {
   $scoreFunction = '(g.result + 2 * g.errors_n + POWER(g.errors_n, 1.25))';
 

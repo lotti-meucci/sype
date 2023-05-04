@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/includes/init.php';
 require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/requests.php';
@@ -11,22 +12,29 @@ if ($_SERVER['REQUEST_METHOD'] != "GET")
   exit;
 }
 
-
 check_login();
-$db = get_database();
 
-$body = get_json_body();
-$difficulty_id = $body->difficulty_id;
+if (!isset($_GET['difficulty']) || !ctype_digit($_GET['difficulty']))
+{
+  http_response_code(BAD_REQUEST);
+  exit;
+}
 
 // Retrives the rankings from the database.
+$db = get_database();
 $stmt = get_rankings_by_difficulty($db);
+$id = $_GET['difficulty'];
 
-if (!$stmt->bind_param('i', $difficulty_id))
-  exit_json(new ErrorResponse('"difficulty_id" attribute is not valid'), BAD_REQUEST);
+if (!$stmt->bind_param('i', $id))
+{
+  http_response_code(BAD_REQUEST);
+  exit;
+}
 
 safe_execute($stmt);
 
-//sends the rankings back
+// Sends the rankings back.
 exit_json(fetch_objects($stmt->get_result()), OK);
 exit;
+
 ?>

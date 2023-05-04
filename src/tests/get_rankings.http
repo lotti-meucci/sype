@@ -1,6 +1,1 @@
 GET http://localhost/rankings.php HTTP/1.1
-Content-Type: application/json
-
-{
-  "difficulty_id": "1"
-}

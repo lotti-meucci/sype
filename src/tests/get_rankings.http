@@ -1,1 +1,9 @@
 GET http://localhost/rankings.php?difficulty=1 HTTP/1.1
+
+###
+
+GET http://localhost/rankings.php?difficulty=2 HTTP/1.1
+
+###
+
+GET http://localhost/rankings.php?difficulty=3 HTTP/1.1

@@ -22,10 +22,10 @@ function get_database(): mysqli
 
     if ($config)
     {
-      if (isset($config->host) && gettype($config->host) == "string")
+      if (isset($config->host) && is_string($config->host))
         $host = $config->host;
 
-      if (isset($config->password) && gettype($config->password) == "string")
+      if (isset($config->password) && is_string($config->password))
         $password = $config->password;
     }
 
@@ -137,6 +137,25 @@ function create_game_stmt(mysqli $db): mysqli_stmt
 function get_user_id_stmt(mysqli $db): mysqli_stmt
 {
   return $db->prepare('SELECT id FROM user WHERE nickname = ?');
+}
+
+// Params: (2) difficulty_id (integer)
+function get_rankings(mysqli $db): mysqli_stmt
+{
+  $scoreFunction = '(g.result + 2 * g.errors_n + POWER(g.errors_n, 1.25))';
+
+  return $db->prepare("SELECT u.nickname, g.datetime, g.result, g.errors_n errorsNumber
+                       FROM game g
+                       JOIN difficulty d ON d.id = g.difficulty_id
+                       JOIN user u ON u.id = g.user_id
+                       JOIN (SELECT u.id, MIN($scoreFunction) score
+                             FROM game g
+                             JOIN difficulty d ON d.id = g.difficulty_id
+                             JOIN user u ON u.id = g.user_id
+                             WHERE d.id = ?
+                             GROUP BY u.id) s ON s.id = u.id
+                       WHERE d.id = ? AND $scoreFunction = s.score
+                       ORDER BY s.score");
 }
 
 ?>

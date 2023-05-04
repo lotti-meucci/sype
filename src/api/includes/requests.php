@@ -63,7 +63,7 @@ function check_nickname(object $body): void
     exit_json(new ErrorResponse('"nickname" attribute is not defined'), BAD_REQUEST);
 
   // Type check (must be a string).
-  if (gettype($body->nickname) != 'string')
+  if (!is_string($body->nickname))
     exit_json(new ErrorResponse('"nickname" attribute must be a string'), BAD_REQUEST);
 
   // Spaces check.
@@ -88,7 +88,7 @@ function check_password(object $body): void
     exit_json(new ErrorResponse('"password" attribute is not defined'), BAD_REQUEST);
 
   // Type check (must be a string).
-  if (gettype($body->password) != 'string')
+  if (!is_string($body->password))
     exit_json(new ErrorResponse('"password" attribute must be a string'), BAD_REQUEST);
 
   // Length check (x > 0).

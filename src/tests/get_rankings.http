@@ -1,0 +1,1 @@
+GET http://localhost/rankings.php?difficulty=1 HTTP/1.1

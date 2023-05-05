@@ -24,7 +24,7 @@ _Sype!_ consists of 4 components:
 - **Web server**: Apache HTTP Server
 - **Frontend**: Angular (HTML/CSS/TS)
 
-![ER model](./sype.png)
+![App model](./sype.png)
 
 
 

@@ -33,7 +33,7 @@ _Sype!_ consists of 4 components:
 ### Model
 ![ER model](./database.png)
 _word_(**id**, text) \
-_user_(**id**, nickname, hash, picture_uri) \
+_user_(**id**, nickname, hash) \
 _difficulty_(**id**, description, words_n) \
 _game_(**id**, user_id*, difficulty_id*, datetime, result, errors_n)
 > _entity_(**primary_key**, foreign_key*, attribute)

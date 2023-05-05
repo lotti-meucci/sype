@@ -1,4 +1,8 @@
+[![MIT license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+
+
 # Sype!
+
 
 ## Running the project
 

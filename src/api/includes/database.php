@@ -19,6 +19,7 @@ function get_database(): mysqli
 
     $host = null;
     $password = null;
+    $port = null;
 
     if ($config)
     {
@@ -27,9 +28,12 @@ function get_database(): mysqli
 
       if (isset($config->password) && is_string($config->password))
         $password = $config->password;
+
+      if (isset($config->port) && is_int($config->port))
+        $port = $config->port;
     }
 
-    return new mysqli($host ?? 'localhost', 'root', $password ?? '', 'sype');
+    return new mysqli($host ?? 'localhost', 'root', $password ?? '', 'sype', $port ?? 3306);
   }
   catch (Exception)
   {

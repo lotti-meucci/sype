@@ -1,4 +1,5 @@
 {
   "host": "database",
-  "password": "password"
+  "password": "password",
+  "port": 3306
 }

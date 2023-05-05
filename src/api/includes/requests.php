@@ -43,6 +43,16 @@ function get_json_body(): object
   return $body;
 }
 
+// Checks if the body is a PNG picture. MAY EXIT.
+function check_png_body(): void
+{
+  if ($_SERVER["CONTENT_TYPE"] != "image/png")
+  {
+    http_response_code(UNSUPPORTED_MEDIA_TYPE);
+    exit;
+  }
+}
+
 // If the user is already logged-in, sends an Unauthorized status code. MAY EXIT.
 function check_login(): void
 {

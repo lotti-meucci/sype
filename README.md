@@ -54,17 +54,17 @@ _game_(**id**, user_id*, difficulty_id*, datetime, result, errors_n)
 > **Non-idempotent operations**: POST
 
 ### Routes
-| Route                          | Methods                 | Description                                     | Type |
-|--------------------------------|-------------------------|-------------------------------------------------|------|
-| /users.php?q=_pattern_         | PUT, GET, PATCH, DELETE | Create, get, modify and delete users            | JSON |
-| /login.php                     | POST                    | Log in                                          | JSON |
-| /logout.php                    | POST                    | Log out                                         | JSON |
-| /pictures.php?user=_nickname_  | PUT, GET, PATCH, DELETE | Create, get, modify and delete profile pictures | PNG  |
-| /difficulties.php              | GET                     | Get difficulties informations                   | JSON |
-| /startGame.php                 | POST                    | Starts a new game by sending a random word list | JSON |
-| /endGame.php                   | POST                    | Ends a started game                             | JSON |
-| /games.php?user=_nickname_     | GET                     | Get games by user                               | JSON |
-| /rankings.php?difficulty=level | GET                     | Get rankings by difficulty                      | JSON |
+| Route                            | Methods                 | Description                                     | Type |
+|----------------------------------|-------------------------|-------------------------------------------------|------|
+| /users.php?q=_pattern_           | PUT, GET, PATCH, DELETE | Create, get, modify and delete users            | JSON |
+| /login.php                       | POST                    | Log in                                          | JSON |
+| /logout.php                      | POST                    | Log out                                         | JSON |
+| /pictures.php?user=_nickname_    | PUT, GET, PATCH, DELETE | Create, get, modify and delete profile pictures | PNG  |
+| /difficulties.php                | GET                     | Get difficulties informations                   | JSON |
+| /startGame.php                   | POST                    | Starts a new game by sending a random word list | JSON |
+| /endGame.php                     | POST                    | Ends a started game                             | JSON |
+| /games.php?user=_nickname_       | GET                     | Get games by user                               | JSON |
+| /rankings.php?difficulty=_level_ | GET                     | Get rankings by difficulty                      | JSON |
 
 
 

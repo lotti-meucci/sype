@@ -81,6 +81,9 @@ switch ($_SERVER['REQUEST_METHOD'])
     exit;
 
   case 'DELETE':
+    check_login();
+    check_ownership();
+    http_response_code(remove_session_png($db) ? OK : CONFLICT);
     exit;
 
   default:

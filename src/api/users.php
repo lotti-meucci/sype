@@ -4,6 +4,7 @@ require_once __DIR__ . '/includes/init.php';
 require_once __DIR__ . '/includes/classes.php';
 require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/requests.php';
+require_once __DIR__ . '/includes/filesystem.php';
 
 $db = get_database();
 
@@ -116,6 +117,9 @@ switch ($_SERVER['REQUEST_METHOD'])
   case 'DELETE':
     check_login();
     check_ownership();
+
+    // Removes the profile picture.
+    remove_session_png($db);
 
     // Deletes the user from the database.
     $stmt = delete_user_stmt($db);

@@ -48,6 +48,7 @@ if (!$result || !password_verify($body->password, $result->hash))
 }
 
 // Puts the nickname inside the session array (logs in).
+session_regenerate_id();
 $_SESSION['user'] = $body->nickname;
 http_response_code(OK);
 exit;

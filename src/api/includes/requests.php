@@ -6,6 +6,7 @@ require_once __DIR__ . '/classes.php';
 // HTTP response codes.
 const OK = 200;
 const CREATED = 201;
+const NO_CONTENT = 204;
 const BAD_REQUEST = 400;
 const UNAUTHORIZED = 401;
 const FORBIDDEN = 403;

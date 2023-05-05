@@ -9,6 +9,9 @@
   // Prevents error reports from echoing.
   error_reporting(0);
 
+  // FOR TESTING PURPOSE ONLY.
+  error_reporting(E_ALL & ~E_WARNING);
+
   // Removes the "Content-Type" header from the response.
   header('Content-Type:');
 

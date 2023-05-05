@@ -23,26 +23,20 @@ if (!isset($_GET['user']))
   exit_json(fetch_objects($stmt->get_result()), OK);
 }
 
-
 // If the user does not exist, sends the Not Found code back.
-
-$nickname = $_GET['user'];
-$stmt = get_user_id_stmt($db);
-
-if(!$stmt->bind_param('s', $nickname))
+try
+{
+  if (!user_exist($db, $_GET['user']))
+  {
+    http_response_code(NOT_FOUND);
+    exit;
+  }
+}
+catch (InvalidArgumentException)
 {
   http_response_code(BAD_REQUEST);
   exit;
 }
-
-safe_execute($stmt);
-
-if(!$stmt->get_result()->fetch_object())
-{
-  http_response_code(NOT_FOUND);
-  exit;
-}
-
 
 $stmt = get_user_games_stmt($db);
 

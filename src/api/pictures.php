@@ -30,6 +30,32 @@ switch ($_SERVER['REQUEST_METHOD'])
     exit;
 
   case 'GET':
+    check_login();
+
+    if (!isset($_GET['user']))
+    {
+      http_response_code(BAD_REQUEST);
+      exit;
+    }
+
+    $user_id;
+
+    // If the user does not exist, sends the Not Found code back.
+    try
+    {
+      if (!user_exist($db, $_GET['user'], $user_id))
+      {
+        http_response_code(NOT_FOUND);
+        exit;
+      }
+    }
+    catch (InvalidArgumentException)
+    {
+      http_response_code(BAD_REQUEST);
+      exit;
+    }
+
+    http_response_code(readfile(PICTURES_DIR . "/$user_id.png") ? OK : NO_CONTENT);
     exit;
 
   case 'PATCH':

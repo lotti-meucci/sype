@@ -49,6 +49,23 @@ function fetch_objects(mysqli_result $result): array
   return $array;
 }
 
+// Returns true if the specified user exists in the database, otherwise false.
+function user_exist(mysqli $db, string $nickname, ?int &$id = null): bool
+{
+  $stmt = get_user_id_stmt($db);
+
+  if(!$stmt->bind_param('s', $nickname))
+    throw new InvalidArgumentException();
+
+  safe_execute($stmt);
+  $obj = $stmt->get_result()->fetch_object();
+
+  if ($obj)
+    $id = $obj->id;
+
+  return $obj != null;
+}
+
 // Executes a statement and catches exceptions. MAY EXIT.
 // The error code will pass to "$on_error" (callable).
 function safe_execute(mysqli_stmt $stmt, ?callable $on_error = null): void

@@ -1,0 +1,1 @@
+POST http://localhost/logout.php HTTP/1.1

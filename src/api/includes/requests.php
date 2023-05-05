@@ -3,6 +3,9 @@
 require_once __DIR__ . '/init.php';
 require_once __DIR__ . '/classes.php';
 
+// Sizes.
+const MIB = 1_048_576;
+
 // HTTP response codes.
 const OK = 200;
 const CREATED = 201;
@@ -13,6 +16,7 @@ const FORBIDDEN = 403;
 const NOT_FOUND = 404;
 const METHOD_NOT_ALLOWED = 405;
 const CONFLICT = 409;
+const CONTENT_TOO_LARGE = 413;
 const UNSUPPORTED_MEDIA_TYPE = 415;
 const INTERNAL_SERVER_ERROR = 500;
 
@@ -50,6 +54,12 @@ function check_png_body(): void
   if ($_SERVER["CONTENT_TYPE"] != "image/png")
   {
     http_response_code(UNSUPPORTED_MEDIA_TYPE);
+    exit;
+  }
+
+  if ((int)$_SERVER["CONTENT_LENGTH"] > 2 * MIB)
+  {
+    http_response_code(CONTENT_TOO_LARGE);
     exit;
   }
 }

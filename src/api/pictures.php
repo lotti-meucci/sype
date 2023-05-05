@@ -55,7 +55,11 @@ switch ($_SERVER['REQUEST_METHOD'])
       exit;
     }
 
-    http_response_code(readfile(PICTURES_DIR . "/$user_id.png") ? OK : NO_CONTENT);
+    http_response_code(OK);
+
+    if (!readfile(PICTURES_DIR . "/$user_id.png"))
+      http_response_code(NO_CONTENT);
+
     exit;
 
   case 'PATCH':

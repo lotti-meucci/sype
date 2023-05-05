@@ -13,7 +13,7 @@ function open_session_png(mysqli $db, ?int &$user_id): mixed
 
 function store_png(int $id): void
 {
-  copy('php://input', PICTURES_DIR . "$id.png");
+  copy('php://input', PICTURES_DIR . "/$id.png");
 }
 
 ?>

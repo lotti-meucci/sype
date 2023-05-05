@@ -1,1 +1,0 @@
-GET http://localhost/users.php?q=user HTTP/1.1

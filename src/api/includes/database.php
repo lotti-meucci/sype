@@ -152,4 +152,23 @@ function get_rankings_stmt(mysqli $db): mysqli_stmt
                        ORDER BY s.score");
 }
 
+// No params.
+function get_all_games_stmt(mysqli $db): mysqli_stmt
+{
+  return $db->prepare('SELECT u.nickname, g.datetime, g.result, g.errors_n errorsNumber
+                       FROM game g
+                       JOIN user u ON g.user_id = u.id
+                       ORDER BY g.datetime DESC');
+}
+
+// Params: nickname (string).
+function get_user_games_stmt(mysqli $db): mysqli_stmt
+{
+  return $db->prepare('SELECT u.nickname, g.datetime, g.result, g.errors_n errorsNumber
+                       FROM game g
+                       JOIN user u ON g.user_id = u.id
+                       WHERE u.nickname = ?
+                       ORDER BY g.datetime DESC');
+}
+
 ?>

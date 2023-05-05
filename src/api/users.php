@@ -40,8 +40,8 @@ switch ($_SERVER['REQUEST_METHOD'])
   case 'GET':
     check_login();
 
-    // Creates a SQL LIKE pattern using the "user" URL param.
-    $pattern = '%' . ($_GET['user'] ?? '') . '%';
+    // Creates a SQL LIKE pattern using the "q" URL param.
+    $pattern = ($_GET['q'] ?? '') . '%';
 
 
     // Retrives the users from the database.
@@ -55,7 +55,6 @@ switch ($_SERVER['REQUEST_METHOD'])
     $response = fetch_objects($stmt->get_result());
 
     exit_json($response, OK);
-    exit;
 
   case 'PATCH':
     check_login();

@@ -35,6 +35,5 @@ safe_execute($stmt);
 
 // Sends the rankings back.
 exit_json(fetch_objects($stmt->get_result()), OK);
-exit;
 
 ?>

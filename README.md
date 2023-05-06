@@ -69,6 +69,8 @@ _game_(**id**, user_id*, difficulty_id*, datetime, result, errors_n)
 | /endGame.php                     | POST                    | Ends a started game                             | JSON |
 | /games.php?user=_nickname_       | GET                     | Get games by user                               | JSON |
 | /rankings.php?difficulty=_level_ | GET                     | Get rankings by difficulty                      | JSON |
+- [Usage](./tests/)
+- [Routes logic](./src/api/)
 
 
 

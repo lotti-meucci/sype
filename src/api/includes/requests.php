@@ -57,6 +57,7 @@ function check_png_body(): void
     exit;
   }
 
+  // Checks the length of the body (max 2 MiB).
   if ((int)$_SERVER["CONTENT_LENGTH"] > 2 * MIB)
   {
     http_response_code(CONTENT_TOO_LARGE);

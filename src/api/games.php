@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] != "GET")
 check_login();
 $db = get_database();
 
-// If 'user' is null sends all games from db.
+// If the "user" URL Param is not defined sends a JSON array with every game.
 if (!isset($_GET['user']))
 {
   $stmt = get_all_games_stmt($db);
@@ -23,7 +23,7 @@ if (!isset($_GET['user']))
   exit_json(fetch_objects($stmt->get_result()), OK);
 }
 
-// If the user does not exist, sends the Not Found code back.
+// If the specified user does not exist, sends the Not Found status code.
 try
 {
   if (!user_exist($db, $_GET['user']))

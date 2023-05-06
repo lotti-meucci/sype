@@ -18,6 +18,7 @@ switch ($_SERVER['REQUEST_METHOD'])
     $user_id;
     $file = open_session_png($db, $user_id);
 
+    // If the file already exists, closes the stream and sends a Conflict status code
     if ($file)
     {
       fclose($file);
@@ -40,7 +41,7 @@ switch ($_SERVER['REQUEST_METHOD'])
 
     $user_id;
 
-    // If the user does not exist, sends the Not Found code back.
+    // If the user does not exist, sends a Not Found status code.
     try
     {
       if (!user_exist($db, $_GET['user'], $user_id))
@@ -57,6 +58,7 @@ switch ($_SERVER['REQUEST_METHOD'])
 
     http_response_code(OK);
 
+    // Tries to echo the required picture.
     if (!readfile(PICTURES_DIR . "/$user_id.png"))
       http_response_code(NO_CONTENT);
 
@@ -69,13 +71,16 @@ switch ($_SERVER['REQUEST_METHOD'])
     $user_id;
     $file = open_session_png($db, $user_id);
 
+    // If the file does NOT exists, sends a Conflict status code.
     if (!$file)
     {
       http_response_code(CONFLICT);
       exit;
     }
 
+    // Closes the stream.
     fclose($file);
+
     store_png($user_id);
     http_response_code(OK);
     exit;

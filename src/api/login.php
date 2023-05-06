@@ -47,8 +47,10 @@ if (!$result || !password_verify($body->password, $result->hash))
   exit;
 }
 
-// Puts the nickname inside the session array (logs in).
+// Sends a new session token via cookies (session attacks prevention).
 session_regenerate_id();
+
+// Puts the nickname inside the session array (logs in).
 $_SESSION['user'] = $body->nickname;
 http_response_code(OK);
 exit;

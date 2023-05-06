@@ -9,6 +9,8 @@ const ER_DUP_ENTRY = 1062;  // Duplicate error.
 // Returns a database connection after checking for errors. MAY EXIT.
 function get_database(): mysqli
 {
+  // Tries to parse the database configuration JSON.
+
   try
   {
     $config = null;
@@ -54,6 +56,7 @@ function fetch_objects(mysqli_result $result): array
 }
 
 // Returns true if the specified user exists in the database, otherwise false.
+// "$id" (by reference) will be altered with the ID of the specified user.
 function user_exist(mysqli $db, string $nickname, ?int &$id = null): bool
 {
   $stmt = get_user_id_stmt($db);

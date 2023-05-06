@@ -118,6 +118,17 @@ function check_password(object $body): void
     exit_json(new ErrorResponse('"password" cannot be empty'), BAD_REQUEST);
 }
 
+// Checks if the given body contains a valid "difficulty" attribute. MAY EXIT.
+function check_difficulty(object $body): void
+{
+  if (!isset($body->difficulty))
+    exit_json(new ErrorResponse('"difficulty" attribute is not defined'), BAD_REQUEST);
+
+  // Type check (must be an integer).
+  if (!is_int($body->difficulty) || $body->difficulty <= 0)
+    exit_json(new ErrorResponse('"difficulty" attribute must be a positive integer'), BAD_REQUEST);
+}
+
 // Checks if the logged-in user is the owner of the resource ("user" URL param). MAY EXIT.
 function check_ownership(): void
 {

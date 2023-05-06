@@ -55,6 +55,17 @@ function fetch_objects(mysqli_result $result): array
   return $array;
 }
 
+// Fetches every row and inserts the first attribute's value into an array.
+function fetch_firsts(mysqli_result $result): array
+{
+  $array = [];
+
+  while ($row = $result->fetch_row())
+    array_push($array, $row[0]);
+
+  return $array;
+}
+
 // Returns true if the specified user exists in the database, otherwise false.
 // "$id" (by reference) will be altered with the ID of the specified user.
 function user_exist(mysqli $db, string $nickname, ?int &$id = null): bool
@@ -193,6 +204,23 @@ function get_user_games_stmt(mysqli $db): mysqli_stmt
                        JOIN user u ON g.user_id = u.id
                        WHERE u.nickname = ?
                        ORDER BY g.datetime DESC');
+}
+
+// Params: words_n (int).
+function get_random_words_stmt(mysqli $db): mysqli_stmt
+{
+  return $db->prepare('SELECT text
+                       FROM word
+                       ORDER BY RAND()
+                       LIMIT ?');
+}
+
+// Params: difficulty_id (int).
+function get_words_number_by_difficulty_stmt(mysqli $db): mysqli_stmt
+{
+  return $db->prepare('SELECT words_n
+                       FROM difficulty
+                       WHERE id = ?');
 }
 
 ?>

@@ -13,4 +13,14 @@ class ErrorResponse
   }
 }
 
+class TextResponse
+{
+  public readonly string $text;
+
+  function __construct(string $text)
+  {
+    $this->text = $text;
+  }
+}
+
 ?>

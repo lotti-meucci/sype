@@ -3,8 +3,12 @@
 require_once __DIR__ . '/init.php';
 require_once __DIR__ . '/classes.php';
 
+// Patterns
+const SPACES = '([ \t\n\r\0\x0B])';
+
 // Sizes.
-const MIB = 1_048_576;
+const KIB = 1024;
+const MIB = KIB * KIB;
 
 // HTTP response codes.
 const OK = 200;
@@ -35,6 +39,13 @@ function get_json_body(): object
   if ($_SERVER["CONTENT_TYPE"] != "application/json")
   {
     http_response_code(UNSUPPORTED_MEDIA_TYPE);
+    exit;
+  }
+
+  // Checks the length of the body (max 1 KiB).
+  if ((int)$_SERVER["CONTENT_LENGTH"] > KIB)
+  {
+    http_response_code(CONTENT_TOO_LARGE);
     exit;
   }
 
@@ -89,7 +100,7 @@ function check_nickname(object $body): void
     exit_json(new ErrorResponse('"nickname" attribute must be a string'), BAD_REQUEST);
 
   // Spaces check.
-  if (preg_match('([ \t\n\r\0\x0B])', $body->nickname))
+  if (preg_match(SPACES, $body->nickname))
     exit_json(new ErrorResponse('"nickname" attribute must not contain spaces'), BAD_REQUEST);
 
   // Length check (0 < x <= 20).
@@ -128,6 +139,29 @@ function check_difficulty(object $body): void
   if (!is_int($body->difficulty) || $body->difficulty <= 0)
     exit_json(new ErrorResponse('"difficulty" attribute must be a positive integer'), BAD_REQUEST);
 }
+
+// Checks if the given body contains a valid "text" attribute. MAY EXIT.
+function check_text(object $body): void
+{
+  if (!isset($body->text))
+    exit_json(new ErrorResponse('"text" attribute is not defined'), BAD_REQUEST);
+
+  // Type check (must be float).
+  if (!is_string($body->text))
+    exit_json(new ErrorResponse('"text" attribute must be string'), BAD_REQUEST);
+}
+
+// Checks if the given body contains a valid "result" attribute. MAY EXIT.
+function check_result(object $body): void
+{
+  if (!isset($body->result))
+    exit_json(new ErrorResponse('"result" attribute is not defined'), BAD_REQUEST);
+
+  // Type check (must be float).
+  if (!is_float($body->result) || $body->result <= 0)
+    exit_json(new ErrorResponse('"result" attribute must be a positive float'), BAD_REQUEST);
+}
+
 
 // Checks if the logged-in user is the owner of the resource ("user" URL param). MAY EXIT.
 function check_ownership(): void

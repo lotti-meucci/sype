@@ -46,6 +46,6 @@ safe_execute($stmt);
 
 $_SESSION['game_words'] = fetch_firsts($stmt->get_result());
 $_SESSION['game_difficulty'] = $difficulty;
-exit_json($_SESSION['game_words'], OK);
+exit_json(new TextResponse(implode(" ", $_SESSION['game_words'])), OK);
 
 ?>

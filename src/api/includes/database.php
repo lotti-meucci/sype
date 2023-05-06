@@ -151,15 +151,11 @@ function get_difficulties_stmt(mysqli $db): mysqli_stmt
   return $db->prepare('SELECT id level, description, words_n wordsNumber FROM difficulty');
 }
 
-// Params: user_id (integer), difficulty_id (integer), result (decimal), errors_n (integer).
+// Params: difficulty_id (integer), result (decimal), errors_n (integer), nickname (string).
 function create_game_stmt(mysqli $db): mysqli_stmt
 {
-  return $db->prepare('INSERT INTO game(
-                         user_id,
-                         difficulty_id,
-                         result,
-                         errors_n
-                       ) VALUES (?, ?, ?, ?)');
+  return $db->prepare('INSERT INTO game(user_id, difficulty_id, result, errors_n)
+                         SELECT id, ?, ?, ? FROM user WHERE nickname = ?');
 }
 
 // Params: nickname (string).

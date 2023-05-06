@@ -1,0 +1,7 @@
+POST http://localhost/endGame.php HTTP/1.1
+Content-Type: application/json
+
+{
+  "result": 33.3,
+  "text": "word1 word2 word3"
+}

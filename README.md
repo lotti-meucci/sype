@@ -4,13 +4,15 @@
 # Sype!
 
 
-## Running the project
+## Working with the project
 
 Run `./run.sh.ps1` to build and host the project with docker.
 
 The password of the dockerized MariaDB is located in two different files:
 - [MARIADB_ROOT_PASSWORD.env](./docker/MARIADB_ROOT_PASSWORD.env) (MariaDB configuration)
 - [database.json](./src/api/config/database.json) (PHP database connection configuration)
+
+We recommend to use Visual Studio Code as code editor to work on sype.
 
 
 

@@ -23,4 +23,14 @@ class TextResponse
   }
 }
 
+class NicknameResponse
+{
+  public readonly string $nickname;
+
+  function __construct(string $nickname)
+  {
+    $this->nickname = $nickname;
+  }
+}
+
 ?>

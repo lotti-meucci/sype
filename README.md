@@ -63,7 +63,7 @@ _game_(**id**, user_id*, difficulty_id*, datetime, result, errors_n)
 | Route                            | Methods                 | Description                                     | Type |
 |----------------------------------|-------------------------|-------------------------------------------------|------|
 | /users.php?q=_pattern_           | PUT, GET, PATCH, DELETE | Create, get, modify and delete users            | JSON |
-| /login.php                       | POST                    | Log in                                          | JSON |
+| /login.php                       | GET, POST               | Log in                                          | JSON |
 | /logout.php                      | POST                    | Log out                                         | JSON |
 | /pictures.php?user=_nickname_    | PUT, GET, PATCH, DELETE | Create, get, modify and delete profile pictures | PNG  |
 | /difficulties.php                | GET                     | Get difficulties informations                   | JSON |

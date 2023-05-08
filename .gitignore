@@ -1,6 +1,9 @@
 # MariaDB
 docker/mariadb
 
+# Dev Containers
+**/.devcontainer
+
 # Compiled output
 **/dist
 **/tmp

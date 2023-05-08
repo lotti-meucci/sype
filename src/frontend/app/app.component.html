@@ -1,14 +1,2 @@
-<div class="container-fluid text-center">
-    
-    <app-navbar></app-navbar>
-    
-    <div class="row g-0">
-      <div class="col flex">
-        bruh
-      </div>
-      <div class="col">
-        <app-game-zone></app-game-zone>
-      </div>
-    </div>
-  </div>
+<app-navbar [page]="getRoute()"></app-navbar>
 <router-outlet></router-outlet>

@@ -5,14 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LogoComponent } from './logo/logo.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { GameZoneComponent } from './game-zone/game-zone.component';
+import { GameComponent } from './game/game.component';
+import { RankingsComponent } from './rankings/rankings.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogoComponent,
     NavbarComponent,
-    GameZoneComponent
+    GameComponent,
+    RankingsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

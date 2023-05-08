@@ -1,0 +1,10 @@
+.button-height{
+    height: 50px;
+    align-self: auto;
+}
+
+button{
+    --bs-btn-padding-y: .45rem; 
+    --bs-btn-padding-x: .90rem;
+    --bs-btn-font-size: .80rem;
+}

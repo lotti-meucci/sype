@@ -12,7 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] != "GET")
   exit;
 }
 
-check_login();
+kill_game();
+$db = get_database();
+check_login($db);
 
 if (!isset($_GET['difficulty']) || !ctype_digit($_GET['difficulty']))
 {
@@ -23,7 +25,6 @@ if (!isset($_GET['difficulty']) || !ctype_digit($_GET['difficulty']))
 
 // Retrives the rankings from the database.
 
-$db = get_database();
 $stmt = get_rankings_stmt($db);
 $id = $_GET['difficulty'];
 

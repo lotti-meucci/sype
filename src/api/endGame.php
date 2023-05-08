@@ -13,8 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] != "POST")
   exit;
 }
 
-check_login();
+if (!isset($_SESSION['game_difficulty'])){
+  http_response_code(CONFLICT);
+  exit;
+}
+
 $db = get_database();
+check_login($db);
 $body = get_json_body();
 check_result($body);
 check_text($body);
@@ -28,10 +33,9 @@ for ($i = 0; $i < count($gameWords) && $i < count($submittedWords); $i++)
 
 $stmt = create_game_stmt($db);
 $result = $body->result;
-$stmt->bind_param('idis', $_SESSION['game_difficulty'], $result, $errors, $_SESSION['user']);
+$stmt->bind_param('iidi', $_SESSION['user'], $_SESSION['game_difficulty'], $result, $errors);
 safe_execute($stmt);
-
-unset($_SESSION['game_words'], $_SESSION['game_difficulty']);
+kill_game();
 http_response_code(OK);
 exit;
 

@@ -121,16 +121,22 @@ function get_nicknames_stmt(mysqli $db): mysqli_stmt
   return $db->prepare('SELECT nickname FROM user WHERE nickname LIKE ?');
 }
 
-// Params: new_nickname (string), old_nickname (string).
-function modify_nickname_stmt(mysqli $db): mysqli_stmt
+// Params: user_id (integer).
+function get_nickname_by_id_stmt(mysqli $db): mysqli_stmt
 {
-  return $db->prepare('UPDATE user SET nickname = ? WHERE nickname = ?');
+  return $db->prepare('SELECT nickname FROM user WHERE id = ?');
 }
 
-// Params: hash (string), nickname (string).
+// Params: new_nickname (string), user_id (integer).
+function modify_nickname_stmt(mysqli $db): mysqli_stmt
+{
+  return $db->prepare('UPDATE user SET nickname = ? WHERE id = ?');
+}
+
+// Params: hash (string), user_id (integer).
 function modify_hash_stmt(mysqli $db): mysqli_stmt
 {
-  return $db->prepare('UPDATE user SET hash = ? WHERE nickname = ?');
+  return $db->prepare('UPDATE user SET hash = ? WHERE id = ?');
 }
 
 // Params: nickname (string).
@@ -139,10 +145,10 @@ function get_hash_stmt(mysqli $db): mysqli_stmt
   return $db->prepare('SELECT hash FROM user WHERE nickname = ?');
 }
 
-// Params: nickname (string)
+// Params: user_id (integer)
 function delete_user_stmt(mysqli $db): mysqli_stmt
 {
-  return $db->prepare('DELETE FROM user WHERE nickname = ?');
+  return $db->prepare('DELETE FROM user WHERE id = ?');
 }
 
 // No params.
@@ -151,11 +157,11 @@ function get_difficulties_stmt(mysqli $db): mysqli_stmt
   return $db->prepare('SELECT id level, description, words_n wordsNumber FROM difficulty');
 }
 
-// Params: difficulty_id (integer), result (decimal), errors_n (integer), nickname (string).
+// Params: user_id (integer), difficulty_id (integer), result (decimal), errors_n (integer).
 function create_game_stmt(mysqli $db): mysqli_stmt
 {
-  return $db->prepare('INSERT INTO game(user_id, difficulty_id, result, errors_n)
-                         SELECT id, ?, ?, ? FROM user WHERE nickname = ?');
+  return $db->prepare('INSERT INTO game(user_id, difficulty_id, result, errors_n) VALUES
+                         (?, ?, ?, ?)');
 }
 
 // Params: nickname (string).

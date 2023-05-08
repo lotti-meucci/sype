@@ -12,10 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] != "GET")
   exit;
 }
 
-check_login();
+kill_game();
+$db = get_database();
+check_login($db);
 
 // Retrives the difficulties.
-$db = get_database();
 $stmt = get_difficulties_stmt($db);
 safe_execute($stmt);
 

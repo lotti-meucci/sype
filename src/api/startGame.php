@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] != "POST")
   exit;
 }
 
-check_login();
 $db = get_database();
+check_login($db);
 $body = get_json_body();
 check_difficulty($body);
 

@@ -6,6 +6,7 @@ require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/requests.php';
 require_once __DIR__ . '/includes/filesystem.php';
 
+kill_game();
 $db = get_database();
 
 // Allowed methods: PUT, GET, PATCH, DELETE.
@@ -39,7 +40,7 @@ switch ($_SERVER['REQUEST_METHOD'])
     exit;
 
   case 'GET':
-    check_login();
+    check_login($db);
 
     // Creates a SQL LIKE pattern using the "q" URL param.
     $pattern = ($_GET['q'] ?? '') . '%';
@@ -58,7 +59,7 @@ switch ($_SERVER['REQUEST_METHOD'])
     exit_json($response, OK);
 
   case 'PATCH':
-    check_login();
+    check_login($db);
     check_ownership();
     $body = get_json_body();
 
@@ -73,9 +74,9 @@ switch ($_SERVER['REQUEST_METHOD'])
 
       $stmt = modify_nickname_stmt($db);
       $new = $body->nickname;
-      $old = $_SESSION['user'];
+      $id = $_SESSION['user'];
 
-      if (!$stmt->bind_param('ss', $new, $old))
+      if (!$stmt->bind_param('si', $new, $id))
         exit_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
 
       safe_execute($stmt, function(int $code)
@@ -88,7 +89,7 @@ switch ($_SERVER['REQUEST_METHOD'])
 
 
       // Changes the nickname of the logged-in user.
-      $_SESSION['user'] = $new;
+      $_SESSION['nickname'] = $new;
     }
 
     // Changing password.
@@ -101,12 +102,9 @@ switch ($_SERVER['REQUEST_METHOD'])
       // Modifies the password on the database by updating the hash.
 
       $stmt = modify_hash_stmt($db);
-      $nickname = $_SESSION['user'];
+      $id = $_SESSION['user'];
       $hash = password_hash($body->password, PASSWORD_DEFAULT);
-
-      if (!$stmt->bind_param('ss', $hash, $nickname))
-        exit_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
-
+      $stmt->bind_param('si', $hash, $id);
       safe_execute($stmt);
     }
 
@@ -115,7 +113,7 @@ switch ($_SERVER['REQUEST_METHOD'])
     exit;
 
   case 'DELETE':
-    check_login();
+    check_login($db);
     check_ownership();
 
     // Removes the profile picture.
@@ -123,7 +121,8 @@ switch ($_SERVER['REQUEST_METHOD'])
 
     // Deletes the user from the database.
     $stmt = delete_user_stmt($db);
-    $stmt->bind_param('s', $_SESSION['user']);
+    $id =  $_SESSION['user'];
+    $stmt->bind_param('i', $id);
     safe_execute($stmt);
 
     // Logs out.

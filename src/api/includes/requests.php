@@ -77,15 +77,31 @@ function check_png_body(): void
 }
 
 // If the user is already logged-in, sends an Unauthorized status code. MAY EXIT.
-function check_login(): void
+function check_login(mysqli $db): void
 {
-  // Checks if the nickname is inside the session array.
-  if (!isset($_SESSION['user']))
+  // Checks if the user ID is inside the session array.
+  if (isset($_SESSION['user']))
   {
-    header('WWW-Authenticate: SypeLogin realm="Access to Sype"');
-    http_response_code(UNAUTHORIZED);
-    exit;
+    $stmt = get_nickname_by_id_stmt($db);
+    $user_id = $_SESSION['user'];
+    $stmt->bind_param('i', $user_id);
+    safe_execute($stmt);
+    $obj = $stmt->get_result()->fetch_object();
+
+    // Checks if the user is real.
+    if ($obj)
+    {
+      $_SESSION['nickname'] = $obj->nickname;
+      return;
+    }
+
+    // Logs out.
+    session_unset();
   }
+
+  header('WWW-Authenticate: SypeLogin realm="Access to Sype"');
+  http_response_code(UNAUTHORIZED);
+  exit;
 }
 
 // Checks if the given body contains a valid "nickname" attribute. MAY EXIT.
@@ -174,11 +190,17 @@ function check_ownership(): void
   }
 
   // The "user" URL param must be equal to the currently logged-in user.
-  if ($_GET['user'] != $_SESSION['user'])
+  if ($_GET['user'] != $_SESSION['nickname'])
   {
     http_response_code(FORBIDDEN);
     exit;
   }
+}
+
+// Stops the current game with no effects.
+function kill_game()
+{
+  unset($_SESSION['game_words'], $_SESSION['game_difficulty']);
 }
 
 ?>

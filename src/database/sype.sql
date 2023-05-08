@@ -37,5 +37,5 @@ CREATE TABLE IF NOT EXISTS game
   result FLOAT NOT NULL,
   errors_n INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-  FOREIGN KEY (difficulty_id) REFERENCES difficulty(id) ON DELETE CASCADE
+  FOREIGN KEY (difficulty_id) REFERENCES difficulty(id)
 );

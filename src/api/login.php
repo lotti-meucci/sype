@@ -37,7 +37,7 @@ switch ($_SERVER['REQUEST_METHOD'])
     $nickname = $body->nickname;
 
     if (!$stmt->bind_param('s', $nickname))
-      exit_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
+      exit_json(new ErrorResponse('"nickname" is not valid'), BAD_REQUEST);
 
     safe_execute($stmt);
     $result = $stmt->get_result()->fetch_object();

@@ -1,3 +1,35 @@
+@keyframes shake {
+  20% {
+    transform: translateX(-0.3rem);
+  }
+
+  40% {
+    transform: translateX(0.3rem);
+  }
+
+  60% {
+    transform: translateX(-0.3rem);
+  }
+
+  80% {
+    transform: translateX(0.3rem);
+  }
+}
+
 .container {
   max-width: 400px;
+}
+
+form {
+  transition: opacity 200ms;
+}
+
+form.hidden {
+  opacity: 0;
+  pointer-events: 0;
+  user-select: none;
+}
+
+.shake {
+  animation: shake 750ms;
 }

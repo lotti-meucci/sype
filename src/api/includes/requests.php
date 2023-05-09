@@ -109,15 +109,15 @@ function check_nickname(object $body): void
 {
   // Existence check.
   if (!isset($body->nickname))
-    exit_json(new ErrorResponse('"nickname" attribute is not defined'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"nickname" is not defined'), BAD_REQUEST);
 
   // Type check (must be a string).
   if (!is_string($body->nickname))
-    exit_json(new ErrorResponse('"nickname" attribute must be a string'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"nickname" must be a string'), BAD_REQUEST);
 
   // Spaces check.
   if (preg_match(SPACES, $body->nickname))
-    exit_json(new ErrorResponse('"nickname" attribute must not contain spaces'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"nickname" must not contain spaces'), BAD_REQUEST);
 
   // Length check (0 < x <= 20).
   if (strlen($body->nickname) < 1 || strlen($body->nickname) > 20)
@@ -134,11 +134,11 @@ function check_password(object $body): void
 {
   // Existence check.
   if (!isset($body->password))
-    exit_json(new ErrorResponse('"password" attribute is not defined'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"password" is not defined'), BAD_REQUEST);
 
   // Type check (must be a string).
   if (!is_string($body->password))
-    exit_json(new ErrorResponse('"password" attribute must be a string'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"password" must be a string'), BAD_REQUEST);
 
   // Length check (x > 0).
   if (strlen($body->password) <= 0)
@@ -149,33 +149,33 @@ function check_password(object $body): void
 function check_difficulty(object $body): void
 {
   if (!isset($body->difficulty))
-    exit_json(new ErrorResponse('"difficulty" attribute is not defined'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"difficulty" is not defined'), BAD_REQUEST);
 
   // Type check (must be an integer).
   if (!is_int($body->difficulty) || $body->difficulty <= 0)
-    exit_json(new ErrorResponse('"difficulty" attribute must be a positive integer'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"difficulty" must be a positive integer'), BAD_REQUEST);
 }
 
 // Checks if the given body contains a valid "text" attribute. MAY EXIT.
 function check_text(object $body): void
 {
   if (!isset($body->text))
-    exit_json(new ErrorResponse('"text" attribute is not defined'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"text" is not defined'), BAD_REQUEST);
 
   // Type check (must be float).
   if (!is_string($body->text))
-    exit_json(new ErrorResponse('"text" attribute must be string'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"text" must be string'), BAD_REQUEST);
 }
 
 // Checks if the given body contains a valid "result" attribute. MAY EXIT.
 function check_result(object $body): void
 {
   if (!isset($body->result))
-    exit_json(new ErrorResponse('"result" attribute is not defined'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"result" is not defined'), BAD_REQUEST);
 
   // Type check (must be float).
   if (!is_float($body->result) || $body->result <= 0)
-    exit_json(new ErrorResponse('"result" attribute must be a positive float'), BAD_REQUEST);
+    exit_json(new ErrorResponse('"result" must be a positive float'), BAD_REQUEST);
 }
 
 

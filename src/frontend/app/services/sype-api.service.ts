@@ -20,4 +20,8 @@ export class SypeApiService {
   postLogin(credentials: CredentialsRequest): Observable<unknown> {
     return this.http.post(PREFIX + './login.php', credentials, CONFIG);
   }
+
+  putUser(credentials: CredentialsRequest): Observable<unknown> {
+    return this.http.put(PREFIX + './users.php', credentials, CONFIG);
+  }
 }

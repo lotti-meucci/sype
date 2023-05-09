@@ -26,7 +26,7 @@ switch ($_SERVER['REQUEST_METHOD'])
     $hash = password_hash($body->password, PASSWORD_DEFAULT);
 
     if (!$stmt->bind_param('ss', $nickname, $hash))
-      exit_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
+      exit_json(new ErrorResponse('"nickname" is not valid'), BAD_REQUEST);
 
     safe_execute($stmt, function(int $code)
     {
@@ -77,7 +77,7 @@ switch ($_SERVER['REQUEST_METHOD'])
       $id = $_SESSION['user'];
 
       if (!$stmt->bind_param('si', $new, $id))
-        exit_json(new ErrorResponse('"nickname" attribute is not valid'), BAD_REQUEST);
+        exit_json(new ErrorResponse('"nickname" is not valid'), BAD_REQUEST);
 
       safe_execute($stmt, function(int $code)
       {

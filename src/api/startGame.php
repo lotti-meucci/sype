@@ -34,7 +34,7 @@ $obj = $stmt->get_result()->fetch_object();
 if (!$obj)
 {
   exit_json(
-    new ErrorResponse('"difficulty" attribute is not a valid difficulty level.'),
+    new ErrorResponse('"difficulty" is not a valid difficulty level.'),
     BAD_REQUEST
   );
 }

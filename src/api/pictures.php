@@ -6,6 +6,7 @@ require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/requests.php';
 require_once __DIR__ . '/includes/filesystem.php';
 
+kill_game();
 $db = get_database();
 
 // Allowed methods: PUT, GET, PATCH, DELETE.
@@ -13,10 +14,9 @@ switch ($_SERVER['REQUEST_METHOD'])
 {
   case 'PUT':
     check_png_body();
-    check_login();
+    check_login($db);
     check_ownership();
-    $user_id;
-    $file = open_session_png($db, $user_id);
+    $file = open_session_png($db);
 
     // If the file already exists, closes the stream and sends a Conflict status code
     if ($file)
@@ -26,12 +26,12 @@ switch ($_SERVER['REQUEST_METHOD'])
       exit;
     }
 
-    store_png($user_id);
+    store_png($_SESSION['user']);
     http_response_code(CREATED);
     exit;
 
   case 'GET':
-    check_login();
+    check_login($db);
 
     if (!isset($_GET['user']))
     {
@@ -39,12 +39,10 @@ switch ($_SERVER['REQUEST_METHOD'])
       exit;
     }
 
-    $user_id;
-
     // If the user does not exist, sends a Not Found status code.
     try
     {
-      if (!user_exist($db, $_GET['user'], $user_id))
+      if (!user_exist($db, $_GET['user']))
       {
         http_response_code(NOT_FOUND);
         exit;
@@ -56,6 +54,7 @@ switch ($_SERVER['REQUEST_METHOD'])
       exit;
     }
 
+    $user_id = $_SESSION['user'];
     http_response_code(OK);
 
     // Tries to echo the required picture.
@@ -66,10 +65,9 @@ switch ($_SERVER['REQUEST_METHOD'])
 
   case 'PATCH':
     check_png_body();
-    check_login();
+    check_login($db);
     check_ownership();
-    $user_id;
-    $file = open_session_png($db, $user_id);
+    $file = open_session_png($db);
 
     // If the file does NOT exists, sends a Conflict status code.
     if (!$file)
@@ -81,12 +79,12 @@ switch ($_SERVER['REQUEST_METHOD'])
     // Closes the stream.
     fclose($file);
 
-    store_png($user_id);
+    store_png($_SESSION['user']);
     http_response_code(OK);
     exit;
 
   case 'DELETE':
-    check_login();
+    check_login($db);
     check_ownership();
     http_response_code(remove_session_png($db) ? OK : CONFLICT);
     exit;

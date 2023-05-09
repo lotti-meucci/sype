@@ -12,8 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] != "GET")
   exit;
 }
 
-check_login();
+kill_game();
 $db = get_database();
+check_login($db);
 
 // If the "user" URL Param is not defined sends a JSON array with every game.
 if (!isset($_GET['user']))
@@ -38,6 +39,7 @@ catch (InvalidArgumentException)
   exit;
 }
 
+$nickname = $_GET['user'];
 $stmt = get_user_games_stmt($db);
 
 if(!$stmt->bind_param('s', $nickname))

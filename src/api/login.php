@@ -6,12 +6,15 @@ require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/requests.php';
 
 
+kill_game();
+$db = get_database();
+
 // Allowed methods: GET, POST.
 switch ($_SERVER['REQUEST_METHOD'])
 {
   case 'GET':
-    check_login();
-    exit_json(new NicknameResponse($_SESSION['user']), OK);
+    check_login($db);
+    exit_json(new NicknameResponse($_SESSION['nickname']), OK);
 
   case 'POST':
 
@@ -30,7 +33,6 @@ switch ($_SERVER['REQUEST_METHOD'])
 
     // Retrives the password hash for the specified user.
 
-    $db = get_database();
     $stmt = get_hash_stmt($db);
     $nickname = $body->nickname;
 
@@ -52,8 +54,11 @@ switch ($_SERVER['REQUEST_METHOD'])
     // Sends a new session token via cookies (session attacks prevention).
     session_regenerate_id();
 
-    // Puts the nickname inside the session array (logs in).
-    $_SESSION['user'] = $body->nickname;
+    // Puts the user ID inside the session array (logs in).
+    $id;
+    user_exist($db, $body->nickname, $id);
+    $_SESSION['user'] = $id;
+    $_SESSION['nickname'] = $body->nickname;
     http_response_code(OK);
     exit;
 

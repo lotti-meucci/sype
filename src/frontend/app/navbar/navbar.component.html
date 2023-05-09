@@ -8,7 +8,7 @@
     border-5
     border-top-0
     shadow-sm
-    container
+    container-md
     bg-white
     overflow-hidden
   "
@@ -18,10 +18,21 @@
   [class.border-light-secondary]="page == 'profile'"
 >
   <div class="container-fluid pe-0">
-    <a class="navbar-brand ms-3" href="./"><app-logo></app-logo></a>
+    <a class="navbar-brand ms-3" href="./">
+      <app-logo></app-logo>
+    </a>
     <ul
       [class.hide]="static"
-      class="nav user-select-none nav-tabs align-self-end border-transparent me-5"
+
+      class="
+        nav
+        user-select-none
+        nav-tabs
+        align-self-end
+        border-transparent
+        me-4
+        me-md-5
+      "
     >
       <li class="nav-item">
         <a

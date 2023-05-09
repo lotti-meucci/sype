@@ -1,4 +1,5 @@
 FROM php:apache
+RUN a2enmod rewrite
 
 # Installs "mysqli" library.
 RUN docker-php-ext-install mysqli

@@ -17,3 +17,11 @@ nav {
   border-bottom-right-radius: 2rem;
   transition: border-color 125ms linear;
 }
+
+ul {
+  transition: transform 300ms;
+}
+
+ul.hide {
+  transform: translateY(100%);
+}

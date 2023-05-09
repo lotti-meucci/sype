@@ -20,4 +20,4 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ../src/api:/var/www/html  # Exposes the API.
+      - ../server:/var/www/html  # Exposes the API.

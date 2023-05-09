@@ -10,15 +10,19 @@
     shadow-sm
     container
     bg-white
+    overflow-hidden
   "
 
-  [class.border-warning]="page == 'play'"
+  [class.border-warning]="page != 'rankings' && page != 'profile'"
   [class.border-success]="page == 'rankings'"
   [class.border-light-secondary]="page == 'profile'"
 >
   <div class="container-fluid pe-0">
     <a class="navbar-brand ms-3" href="./"><app-logo></app-logo></a>
-    <ul class="nav nav-tabs align-self-end border-transparent me-5">
+    <ul
+      [class.hide]="static"
+      class="nav user-select-none nav-tabs align-self-end border-transparent me-5"
+    >
       <li class="nav-item">
         <a
           class="nav-link text-white border-warning bg-warning"

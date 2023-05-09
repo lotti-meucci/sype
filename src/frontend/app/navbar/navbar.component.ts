@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class NavbarComponent {
   @Input() page = "play";
+  @Input() static = false;
 }

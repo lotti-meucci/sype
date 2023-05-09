@@ -1,0 +1,40 @@
+<form (submit)="submit()" class="text-center container shadow-sm card card-body mt-5" action="">
+  <h2 class="fw-bold mb-3">
+    <ng-container  *ngIf="signingUp(); else login">
+      Signup
+    </ng-container>
+    <ng-template #login>
+      Login
+    </ng-template>
+  </h2>
+  <div class="input-group mb-3">
+    <span class="input-group-text">Nickname</span>
+    <input
+      #nickname
+      type="text"
+      class="form-control"
+      maxlength="20"
+      required
+    >
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text">Password</span>
+    <input
+      #password
+      type="password"
+      class="form-control"
+      required
+    >
+  </div>
+  <button class="btn btn-primary mx-auto px-3 mb-2">OK</button>
+  <a [hidden]="signingUp()" routerLink="./signup">Wanna signup?</a>
+  <a [hidden]="!signingUp()" routerLink="/">Already in? Login</a>
+  <div
+    [hidden]="error == null"
+    class="alert text-start alert-danger p-2 mt-4 m-0"
+    role="alert"
+  >
+    <b>Error!</b>
+    {{ error }}
+  </div>
+</form>

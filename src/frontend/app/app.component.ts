@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +6,5 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Sype!';
-
-  constructor(private router: Router) { }
-
-  getRoute() {
-    return this.router.url.substring(1);
-  }
+  title = 'sype';
 }

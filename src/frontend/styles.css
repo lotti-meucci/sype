@@ -25,3 +25,13 @@
 .border-light-secondary {
   border-color: var(--color-light-secondary) !important;
 }
+
+@media (max-width: 576px) {
+  body {
+    display: none;
+  }
+
+  html::after {
+    content: 'Balls';
+  }
+}

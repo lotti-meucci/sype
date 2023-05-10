@@ -1,6 +1,9 @@
 {
-  "/": {
+  "/proxy": {
     "target": "http://localhost",
-    "secure": false
+    "secure": false,
+    "pathRewrite": {
+      "^/proxy": ""
+    }
   }
 }

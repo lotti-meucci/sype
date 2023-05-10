@@ -12,7 +12,7 @@ const CONFIG = { withCredentials: true };
 export class SypeApiService {
   prefix = "";
 
-  constructor(private http: HttpClient) {
+  constructor(protected http: HttpClient) {
     if (isDevMode())
       this.prefix = "/proxy";
   }
@@ -27,5 +27,9 @@ export class SypeApiService {
 
   putUser(credentials: CredentialsRequest): Observable<unknown> {
     return this.http.put(this.prefix + '/users.php', credentials, CONFIG);
+  }
+
+  toPictureUrl(nickaname: string) {
+    return `${this.prefix}/pictures.php?user=${nickaname}`;
   }
 }

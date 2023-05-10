@@ -29,7 +29,7 @@ export class LoginComponent {
     })).subscribe(data => this.authorize());
 
     const primary = this.router.getCurrentNavigation()?.initialUrl.root.children['primary'];
-    this.redirect = primary ? primary.segments[0].path : '/'
+    this.redirect = primary ? primary.segments.map(s => '/' + s.path).join('') : '/'
     this.signedUp = this.router.getCurrentNavigation()?.extras.state?.['signedUp'];
   }
 
@@ -39,8 +39,6 @@ export class LoginComponent {
 
   authorize() {
     this.router.config = authRoutes;
-    console.log(this.router.config);
-    console.log(this.redirect);
     this.router.navigateByUrl(this.redirect);
   }
 

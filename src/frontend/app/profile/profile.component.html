@@ -1,3 +1,5 @@
-<div class="container p-5 hideable">
-  erg
+<div class="container p-5">
+  <div class="profile-picture">
+    <img (error)="onPictureError()" [src]="pictureUrl" alt="Profile picture">
+  </div>
 </div>

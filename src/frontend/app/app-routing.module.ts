@@ -9,6 +9,7 @@ export const authRoutes: Routes = [
   { path: 'play', component: GameComponent },
   { path: 'rankings', component: RankingsComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:id', component: ProfileComponent },
   { path: '**', redirectTo: '/play' }
 ]
 

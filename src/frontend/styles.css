@@ -36,6 +36,17 @@
   user-select: none;
 }
 
+/* PROFILE PICTURE COMPONENT */
+
+.profile-picture {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-picture img {
+  width: 100%;
+}
+
 @media (max-width: 576px) {
   body {
     display: none;

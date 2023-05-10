@@ -26,6 +26,16 @@
   border-color: var(--color-light-secondary) !important;
 }
 
+.hideable {
+  transition: opacity 200ms;
+}
+
+.hideable.hidden {
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
 @media (max-width: 576px) {
   body {
     display: none;

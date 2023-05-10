@@ -19,7 +19,7 @@ export const defaultRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(defaultRoutes)],
+  imports: [RouterModule.forRoot(defaultRoutes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -17,6 +17,7 @@ export class LoginComponent {
   shake: boolean = false;
   signedUp: boolean = false;
   hidden: boolean = true;
+  redirect: string;
 
   constructor(
     private api: SypeApiService,
@@ -27,6 +28,8 @@ export class LoginComponent {
       return '';
     })).subscribe(data => this.authorize());
 
+    const primary = this.router.getCurrentNavigation()?.initialUrl.root.children['primary'];
+    this.redirect = primary ? primary.segments[0].path : '/'
     this.signedUp = this.router.getCurrentNavigation()?.extras.state?.['signedUp'];
   }
 
@@ -36,7 +39,9 @@ export class LoginComponent {
 
   authorize() {
     this.router.config = authRoutes;
-    this.router.navigateByUrl('/play');
+    console.log(this.router.config);
+    console.log(this.redirect);
+    this.router.navigateByUrl(this.redirect);
   }
 
   submit() {

@@ -20,16 +20,6 @@
   max-width: 400px;
 }
 
-form {
-  transition: opacity 200ms;
-}
-
-form.hidden {
-  opacity: 0;
-  pointer-events: 0;
-  user-select: none;
-}
-
 .shake {
   animation: shake 750ms;
 }

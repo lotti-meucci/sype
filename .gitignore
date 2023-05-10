@@ -1,8 +1,6 @@
-# Server
-**/server
-
-# MariaDB
+# Docker binaries and dists.
 docker/mariadb
+docker/server
 
 # Dev Containers
 **/.devcontainer

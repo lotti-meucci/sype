@@ -6,7 +6,7 @@
 
 ## Working with the project
 
-Run `./run.sh.ps1` to build and host the project with docker.
+Run `./run.ps1` or `./run.sh` to build and host the project with docker.
 
 The password of the dockerized MariaDB is located in two different files:
 - [MARIADB_ROOT_PASSWORD.env](./docker/MARIADB_ROOT_PASSWORD.env) (MariaDB configuration)

@@ -4,7 +4,7 @@
   [class.hidden]="hidden"
 >
   <h2 class="fw-bold mb-3">
-    <ng-container  *ngIf="signingUp(); else login">
+    <ng-container *ngIf="signingUp(); else login">
       Signup
     </ng-container>
     <ng-template #login>
@@ -31,10 +31,10 @@
     >
   </div>
   <button class="btn btn-success mx-auto px-3 mb-2">OK</button>
-  <a [hidden]="signingUp() || signedUp" routerLink="./signup">Wanna signup?</a>
-  <a [hidden]="!signingUp()" routerLink="/">Already in? Login</a>
+  <a *ngIf="!signingUp() && !signedUp" routerLink="./signup">Wanna signup?</a>
+  <a *ngIf="signingUp()" routerLink="/">Already in? Login</a>
   <div
-    [hidden]="error == null"
+    *ngIf="error != null"
     [class.shake]="shake"
     class="alert text-start alert-danger p-2 mt-4 m-0"
     role="alert"
@@ -44,7 +44,7 @@
     {{ error }}
   </div>
   <div
-    [hidden]="!signedUp"
+    *ngIf="signedUp"
     class="alert text-start alert-primary p-2 mt-3 m-0"
     role="alert"
   >

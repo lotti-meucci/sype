@@ -7,6 +7,24 @@
 /* Fonts */
 @import 'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Source+Code+Pro:wght@400;700&display=swap';
 
+@keyframes shake {
+  20% {
+    transform: translateX(-0.3rem);
+  }
+
+  40% {
+    transform: translateX(0.3rem);
+  }
+
+  60% {
+    transform: translateX(-0.3rem);
+  }
+
+  80% {
+    transform: translateX(0.3rem);
+  }
+}
+
 :root {
   --bs-body-font-family: 'Source Code Pro', monospace;
   --bs-body-bg: #F9F9F9;
@@ -14,8 +32,16 @@
   --color-light-secondary: #ADB2B6;
 }
 
+*::after, *::before {
+  font-family: 'Source Code Pro', monospace
+}
+
 .dancing {
   font-family: 'Dancing Script', cursive;
+}
+
+.shake {
+  animation: shake 750ms;
 }
 
 .bg-light-secondary {
@@ -36,15 +62,8 @@
   user-select: none;
 }
 
-/* PROFILE PICTURE COMPONENT */
-
-.profile-picture {
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.profile-picture img {
-  width: 100%;
+.width-max-content {
+  width: max-content;
 }
 
 @media (max-width: 576px) {
@@ -52,7 +71,21 @@
     display: none;
   }
 
+  html {
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+  }
+
   html::after {
-    content: 'Balls';
+    margin: 2rem;
+    display: block;
+    content: 'Yooo, you need a wider screen!!';
+    font-weight: bold;
+    font-size: 3rem;
+    color: white;
   }
 }

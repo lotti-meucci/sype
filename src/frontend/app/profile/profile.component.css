@@ -1,0 +1,60 @@
+app-profile-picture {
+  width: 20rem;
+}
+
+@keyframes shine {
+  from {
+    opacity: .6;
+  }
+
+  to {
+    opacity: 0.3;
+  }
+}
+
+#profile-picture.editable > :first-child {
+  transition: filter 150ms;
+}
+
+.pencil {
+  transition: opacity 150ms;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#profile-picture.editable > .pencil {
+  right: 50%;
+  bottom: 50%;
+  transform: translate(50%, 50%);
+  font-size: 5rem;
+  color: var(--bs-body-bg);
+  filter: drop-shadow(0 0 2px #000C);
+}
+
+#nickname.editable > .pencil {
+  margin-left: .5rem;
+  bottom: 50%;
+  transform: translateY(50%);
+  font-size: 2rem;
+}
+
+.editable {
+  animation: none;
+  position: relative;
+}
+
+#profile-picture.editable:hover > :first-child {
+  filter: brightness(60%)
+}
+
+#nickname.editable:hover > :first-child,
+#nickname.editable > :first-child:focus {
+  animation: shine 750ms infinite alternate linear;
+}
+
+.editable:hover > .pencil,
+#nickname.editable > :first-child:focus + .pencil {
+  opacity: 1;
+  pointer-events: revert;
+}

@@ -1,25 +1,3 @@
-@keyframes shake {
-  20% {
-    transform: translateX(-0.3rem);
-  }
-
-  40% {
-    transform: translateX(0.3rem);
-  }
-
-  60% {
-    transform: translateX(-0.3rem);
-  }
-
-  80% {
-    transform: translateX(0.3rem);
-  }
-}
-
 .container {
   max-width: 400px;
-}
-
-.shake {
-  animation: shake 750ms;
 }

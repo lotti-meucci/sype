@@ -10,6 +10,7 @@ import { GameComponent } from './game/game.component';
 import { RankingsComponent } from './rankings/rankings.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
+import { ProfilePictureComponent } from './profile-picture/profile-picture.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { LoginComponent } from './login/login.component';
     GameComponent,
     RankingsComponent,
     ProfileComponent,
-    LoginComponent
+    LoginComponent,
+    ProfilePictureComponent
   ],
   imports: [
     BrowserModule,

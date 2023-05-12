@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, isDevMode } from '@angular/core';
 import { NicknameResponse } from 'app/interfaces/nickname-response';
 import { CredentialsRequest } from 'app/interfaces/credentials-request';
@@ -27,6 +27,30 @@ export class SypeApiService {
 
   putUser(credentials: CredentialsRequest): Observable<unknown> {
     return this.http.put(this.prefix + '/users.php', credentials, CONFIG);
+  }
+
+  patchUser(user: string, credentials: CredentialsRequest): Observable<unknown> {
+    return this.http.patch(
+      this.prefix + '/users.php',
+      credentials,
+      { ...CONFIG, params: new HttpParams().set('user', user) }
+    )
+  }
+
+  putPicture(user: string, png: Blob) {
+    return this.http.put(
+      this.prefix + '/pictures.php',
+      png,
+      { ...CONFIG, params: new HttpParams().set('user', user) }
+    )
+  }
+
+  patchPicture(user: string, png: Blob) {
+    return this.http.patch(
+      this.prefix + '/pictures.php',
+      png,
+      { ...CONFIG, params: new HttpParams().set('user', user) }
+    )
   }
 
   toPictureUrl(nickaname: string) {

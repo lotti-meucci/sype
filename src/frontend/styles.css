@@ -66,6 +66,30 @@
   width: max-content;
 }
 
+[data-tip] {
+  position: relative;
+}
+
+[data-tip]::before {
+  content: attr(data-tip);
+  position: absolute;
+  top: -5px;
+  right: 50%;
+  transform: translate(50%, -100%) scale(0);
+  color: white;
+  background: var(--bs-danger);
+  padding: 5px;
+  border-radius: 5px;
+  pointer-events: none;
+  transition: transform 200ms;
+  transform-origin: bottom;
+  box-shadow: 0 1px 4px #0007;
+}
+
+[data-tip].tip::before {
+  transform: translate(50%, -100%) scale(1);
+}
+
 @media (max-width: 576px) {
   body {
     display: none;

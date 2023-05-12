@@ -3,27 +3,39 @@
     <div
       class="width-max-content mx-auto"
       [class.editable]="isMine"
+      (click)="pictureFileInput?.nativeElement?.click()"
       id="profile-picture"
     >
       <app-profile-picture [nickname]="nickname"></app-profile-picture>
       <i *ngIf="isMine" class="pencil bi bi-pencil-fill"></i>
+      <input
+        *ngIf="isMine"
+        hidden type="file"
+        (change)="onPictureSelected()"
+        accept="image/*"
+        #pictureFileInput
+      >
+      <canvas *ngIf="isMine" hidden #pictureCanvas></canvas>
     </div>
 
-    <div class="width-max-content mx-auto mt-3" [class.shake]="shakeNickname">
-      <h1
-      id="nickname"
-      [class.editable]="isMine"
-      class="display-5 fw-bold"
-      >
-        <span
-          (input)="nicknameInput()"
-          [contentEditable]="isMine"
-          spellcheck="false"
-          #nicknameSpan
-        >{{nickname}}</span>
+    <div [class.tip]="showingNicknameError" [attr.data-tip]="nicknameErrorMessage">
+      <div class="width-max-content mx-auto mt-3" [class.shake]="shakeNickname">
+        <h1
+          id="nickname"
+          [class.editable]="isMine"
+          class="display-5 fw-bold"
+        >
+          <span
+            (blur)="nicknameBlur()"
+            (input)="nicknameInput()"
+            [contentEditable]="isMine"
+            spellcheck="false"
+            #nicknameSpan
+          >{{nickname}}</span>
 
-        <i *ngIf="isMine" class="pencil bi bi-pencil-fill"></i>
-      </h1>
+          <i *ngIf="isMine" class="pencil bi bi-pencil-fill"></i>
+        </h1>
+      </div>
     </div>
     <div *ngIf="isMine" class="width-max-content mx-auto">
       <button class="mt-4 btn btn-primary d-block w-100">

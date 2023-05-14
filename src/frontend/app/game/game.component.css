@@ -1,0 +1,13 @@
+.play{
+  font-size: 2.5rem;
+  width: 17rem;
+}
+
+.difficulty{
+  font-size: 1.3rem;
+}
+
+[data-tip]::before{
+  background-color: grey;
+  width: 100%;
+}

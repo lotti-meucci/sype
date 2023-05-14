@@ -58,3 +58,8 @@ app-profile-picture {
   opacity: 1;
   pointer-events: revert;
 }
+
+
+[data-tip]::before {
+  background: var(--bs-danger);
+}

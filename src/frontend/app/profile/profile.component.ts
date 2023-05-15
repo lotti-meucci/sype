@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { defaultRoutes } from 'app/app-routing.module';
 import { ErrorResponse } from 'app/interfaces/error-response';
@@ -22,6 +23,8 @@ export class ProfileComponent {
   showingNicknameError = false;
   nicknameErrorMessage = '';
   pictureToken = 0;
+  showingPictureError = false;
+  pictureErrorMessage = '';
 
   set nickname(v: string) {
     this.prevEditingNickname = v;
@@ -40,15 +43,13 @@ export class ProfileComponent {
   ) {
     if ('id' in route.snapshot.params)
       this.nickname = this.route.snapshot.params['id'];
-    else
-    {
-      api.getLogin().pipe(catchError(err => {
+    else {
+      api.getLogin().pipe(catchError(() => {
         this.router.config = defaultRoutes;
         this.router.navigateByUrl('/');
         return '';
       })).subscribe(data => {
-        if (typeof data != 'string')
-        {
+        if (typeof data != 'string') {
           this.nickname = data.nickname;
           this.isMine = true;
         }
@@ -78,8 +79,7 @@ export class ProfileComponent {
     else
       this.prevEditingNickname = newNickname;
 
-    if (containsBR)
-    {
+    if (containsBR) {
       this.nicknameSpan.nativeElement.blur();
       return;
     }
@@ -91,13 +91,15 @@ export class ProfileComponent {
     if (this.nickname == newNickname)
       return;
 
-    this.api.patchUser(this.nickname, { nickname: newNickname }).pipe(catchError(err => {
-      const body = err.error as ErrorResponse;
-      this.showNicknameError(body?.message);
-      this.nicknameSpan.nativeElement.textContent = this.nickname;
-      this.startShakeNickname();
-      return '';
-    })).subscribe(data => this.nickname = newNickname);
+    this.api.patchUser(this.nickname, { nickname: newNickname }).pipe(catchError(
+      (err: HttpErrorResponse) => {
+        const body = err.error as ErrorResponse;
+        this.showNicknameError(body?.message);
+        this.nicknameSpan.nativeElement.textContent = this.nickname;
+        this.startShakeNickname();
+        return '';
+      }
+    )).subscribe(data => this.nickname = newNickname);
   }
 
   startShakeNickname() {
@@ -108,7 +110,23 @@ export class ProfileComponent {
   showNicknameError(message: string) {
     this.nicknameErrorMessage = message;
     this.showingNicknameError = true;
-    setTimeout(() => this.showingNicknameError = false, 5000);
+    this.changeDetector.detectChanges()
+
+    setTimeout(() => {
+      this.showingNicknameError = false
+      this.changeDetector.detectChanges()
+    }, 5000);
+  }
+
+  showPictureError(message: string) {
+    this.pictureErrorMessage = message;
+    this.showingPictureError = true;
+    this.changeDetector.detectChanges()
+
+    setTimeout(() => {
+      this.showingPictureError = false;
+      this.changeDetector.detectChanges();
+    }, 5000);
   }
 
   onPictureSelected() {
@@ -126,14 +144,10 @@ export class ProfileComponent {
         context.clearRect(0, 0, canvas.width, canvas.height);
         canvas.width = image.width;
         canvas.height = image.height;
+        context.fillStyle = "#CCD5DE";
+        context.fillRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image, 0, 0);
-
-        canvas.toBlob(blob => {
-          this.api.patchPicture(this.nickname, blob!).subscribe(data => {
-            this.pictureToken++;
-            this.changeDetector.detectChanges();
-          })
-        })
+        canvas.toBlob(blob => this.updatePicture(blob!));
       }
 
       image.src = fileReader.result as string;
@@ -145,5 +159,32 @@ export class ProfileComponent {
       return;
 
     fileReader.readAsDataURL(file);
+  }
+
+  updatePicture(blob: Blob) {
+    this.api.putPicture(this.nickname, blob).pipe(catchError(
+      (err: HttpErrorResponse) => {
+        if (err.status == HttpStatusCode.Conflict) {
+          this.api.patchPicture(this.nickname, blob).pipe(catchError(
+            (err: HttpErrorResponse) => {
+              if (err.status == HttpStatusCode.PayloadTooLarge)
+                this.showPictureError("Selected file too large");
+
+              return '';
+            }
+          )).subscribe(() => this.refreshPicture());
+        }
+
+        if (err.status == HttpStatusCode.PayloadTooLarge)
+          this.showPictureError("Selected file too large");
+
+        return '';
+      })
+    ).subscribe(() => this.refreshPicture());
+  }
+
+  refreshPicture() {
+    this.pictureToken++;
+    this.changeDetector.detectChanges();
   }
 }

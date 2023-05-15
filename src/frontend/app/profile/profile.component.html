@@ -4,6 +4,8 @@
       class="width-max-content mx-auto"
       [class.editable]="isMine"
       (click)="pictureFileInput?.nativeElement?.click()"
+      [class.tip]="showingPictureError"
+      [attr.data-tip]="pictureErrorMessage"
       id="profile-picture"
     >
       <app-profile-picture [token]="pictureToken" [nickname]="nickname"></app-profile-picture>

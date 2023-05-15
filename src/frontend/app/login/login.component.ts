@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { authRoutes } from 'app/app-routing.module';
@@ -23,7 +24,7 @@ export class LoginComponent {
     private api: SypeApiService,
     private router: Router
   ) {
-    this.api.getLogin().pipe(catchError(err => {
+    this.api.getLogin().pipe(catchError(() => {
       this.hidden = false;
       return '';
     })).subscribe(data => this.authorize());
@@ -43,12 +44,11 @@ export class LoginComponent {
   }
 
   submit() {
-    if (this.signingUp())
-    {
+    if (this.signingUp()) {
       this.api.putUser({
         nickname: this.nickname.nativeElement.value,
         password: this.password.nativeElement.value
-      }).pipe(catchError(err => {
+      }).pipe(catchError((err: HttpErrorResponse) => {
         const body = err.error as ErrorResponse;
         this.shake = false;
         this.error = body?.message;
@@ -64,7 +64,7 @@ export class LoginComponent {
     this.api.postLogin({
       nickname: this.nickname.nativeElement.value,
       password: this.password.nativeElement.value
-    }).pipe(catchError(err => {
+    }).pipe(catchError(() => {
       this.shake = false;
       this.error = '"nickname" or "password" are not valid.';
       setTimeout(() => this.shake = true, 100);

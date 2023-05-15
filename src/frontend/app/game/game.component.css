@@ -3,6 +3,11 @@
   width: 17rem;
 }
 
+.play:hover{
+  color: var(--success);
+  background: var(--warning);
+}
+
 .difficulty{
   font-size: 1.3rem;
 }

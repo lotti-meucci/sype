@@ -30,6 +30,13 @@
   --bs-body-bg: #F9F9F9;
   --speed-fast: 150ms;
   --color-light-secondary: #ADB2B6;
+
+  /*Bootstrap RGB colors*/
+  --primary: #0d6efd;
+  --success:#198754;
+  --danger: #dc3545;
+  --warning:#ffc107;
+  --info:#0dcaf0;
 }
 
 *::after, *::before {

@@ -59,6 +59,13 @@ export class ProfileComponent {
     }
   }
 
+  logout() {
+    this.api.postLogout(this.nickname).subscribe(() => {
+      this.router.config = defaultRoutes;
+      this.router.navigateByUrl('/');
+    })
+  }
+
   nicknameInput() {
     const containsBR = this.nicknameSpan.nativeElement.firstElementChild instanceof HTMLBRElement;
 

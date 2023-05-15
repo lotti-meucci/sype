@@ -25,6 +25,13 @@ export class SypeApiService {
     return this.http.post(this.prefix + '/login.php', credentials, CONFIG);
   }
 
+  postLogout(user: string): Observable<unknown>{
+    return this.http.post(
+      this.prefix + '/logout.php',
+      { ...CONFIG, params: new HttpParams().set('user', user) }
+    );
+  }
+
   putUser(credentials: CredentialsRequest): Observable<unknown> {
     return this.http.put(this.prefix + '/users.php', credentials, CONFIG);
   }

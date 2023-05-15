@@ -1,14 +1,14 @@
 <br>
 <div #levels class="container width-max-content">
-
-  <div class="difficultyContainer">
-    <span class="words center">20 words</span>
-    <button
+  <button
+    (mouseenter) ="over()"
+    (mouseout) ="out()"
+    [class.tip]="visible"
+    [attr.data-tip]="'20 Words'"
     class="mt-4 btn btn-success d-block w-100 difficulty">
     Level
     <i class="bi bi-1-circle"></i>
-    </button>
-  </div>
+  </button>
 
   <button
     (mouseenter) ="over()"
@@ -24,7 +24,7 @@
     (mouseenter) ="over()"
     (mouseout) ="out()"
     [class.tip]="visible"
-    [attr.data-tip]="'60 Words'"
+    [attr.data-tip]="'40 Words'"
     class="mt-4 btn btn-danger d-block w-100 difficulty text-white">
     Level
     <i class="bi bi-3-circle"></i>

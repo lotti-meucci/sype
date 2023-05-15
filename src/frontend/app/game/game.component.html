@@ -1,38 +1,29 @@
 <br>
 <div #levels class="container width-max-content">
   <button
-    (mouseenter) ="over()"
-    (mouseout) ="out()"
-    [class.tip]="visible"
     [attr.data-tip]="'20 Words'"
-    class="mt-4 btn btn-success d-block w-100 difficulty">
+    class="tip-on-hover mt-4 btn btn-success d-block w-100 difficulty">
     Level
     <i class="bi bi-1-circle"></i>
   </button>
 
   <button
-    (mouseenter) ="over()"
-    (mouseout) ="out()"
-    [class.tip]="visible"
     [attr.data-tip]="'40 Words'"
-    class="mt-4 btn btn-warning d-block w-100 difficulty text-white">
+    class="tip-on-hover mt-4 btn btn-warning d-block w-100 difficulty text-white">
     Level
     <i class="bi bi-2-circle"></i>
   </button>
 
   <button
-    (mouseenter) ="over()"
-    (mouseout) ="out()"
-    [class.tip]="visible"
     [attr.data-tip]="'40 Words'"
-    class="mt-4 btn btn-danger d-block w-100 difficulty text-white">
+    class="tip-on-hover mt-4 btn btn-danger d-block w-100 difficulty text-white">
     Level
     <i class="bi bi-3-circle"></i>
   </button>
 </div>
 
 <div class="container">
-  <button class="mt-4 btn btn-primary d-block mx-auto play">
+  <button class="tip-on-hover mt-4 btn btn-primary d-block mx-auto play">
     PLAY
     <i class="bi bi-play"></i>
   </button>

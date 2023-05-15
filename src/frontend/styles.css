@@ -85,7 +85,8 @@
   box-shadow: 0 1px 4px #0007;
 }
 
-[data-tip].tip::before {
+[data-tip].tip::before,
+[data-tip].tip-on-hover:hover::before {
   transform: translate(50%, -100%) scale(1);
 }
 

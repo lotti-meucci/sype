@@ -18,4 +18,6 @@ export class ProfilePictureComponent {
     else
       this.url = "";
   }
+
+  @Input() token = 0;
 }

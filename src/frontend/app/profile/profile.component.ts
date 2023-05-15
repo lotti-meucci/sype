@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { defaultRoutes } from 'app/app-routing.module';
 import { ErrorResponse } from 'app/interfaces/error-response';
@@ -21,6 +21,7 @@ export class ProfileComponent {
   shakeNickname = false;
   showingNicknameError = false;
   nicknameErrorMessage = '';
+  pictureToken = 0;
 
   set nickname(v: string) {
     this.prevEditingNickname = v;
@@ -35,7 +36,7 @@ export class ProfileComponent {
     public api: SypeApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private ngZone: NgZone
+    private changeDetector: ChangeDetectorRef
   ) {
     if ('id' in route.snapshot.params)
       this.nickname = this.route.snapshot.params['id'];
@@ -129,7 +130,8 @@ export class ProfileComponent {
 
         canvas.toBlob(blob => {
           this.api.patchPicture(this.nickname, blob!).subscribe(data => {
-            location.reload();
+            this.pictureToken++;
+            this.changeDetector.detectChanges();
           })
         })
       }
@@ -138,6 +140,10 @@ export class ProfileComponent {
     }
 
     const file = this.pictureFileInput.nativeElement.files![0];
+
+    if (!file)
+      return;
+
     fileReader.readAsDataURL(file);
   }
 }

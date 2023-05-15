@@ -6,7 +6,7 @@
       (click)="pictureFileInput?.nativeElement?.click()"
       id="profile-picture"
     >
-      <app-profile-picture [nickname]="nickname"></app-profile-picture>
+      <app-profile-picture [token]="pictureToken" [nickname]="nickname"></app-profile-picture>
       <i *ngIf="isMine" class="pencil bi bi-pencil-fill"></i>
       <input
         *ngIf="isMine"

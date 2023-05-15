@@ -6,12 +6,5 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
-  visible = false;
-  over(){
-    this.visible = true;
- }
-
- out(){
-  this.visible = false;
- }
+  
 }

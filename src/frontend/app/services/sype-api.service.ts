@@ -34,7 +34,14 @@ export class SypeApiService {
       this.prefix + '/users.php',
       credentials,
       { ...CONFIG, params: new HttpParams().set('user', user) }
-    )
+    );
+  }
+
+  deleteUser(user: string): Observable<unknown> {
+    return this.http.delete(
+      this.prefix + '/users.php',
+      { ...CONFIG, params: new HttpParams().set('user', user) }
+    );
   }
 
   putPicture(user: string, png: Blob) {
@@ -42,7 +49,7 @@ export class SypeApiService {
       this.prefix + '/pictures.php',
       png,
       { ...CONFIG, params: new HttpParams().set('user', user) }
-    )
+    );
   }
 
   patchPicture(user: string, png: Blob) {
@@ -50,7 +57,7 @@ export class SypeApiService {
       this.prefix + '/pictures.php',
       png,
       { ...CONFIG, params: new HttpParams().set('user', user) }
-    )
+    );
   }
 
   toPictureUrl(nickaname: string) {

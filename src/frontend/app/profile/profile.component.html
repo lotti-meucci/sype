@@ -40,14 +40,83 @@
       </div>
     </div>
     <div *ngIf="isMine" class="width-max-content mx-auto">
-      <button class="mt-4 btn btn-primary d-block w-100">
+      <button
+        data-bs-toggle="modal"
+        data-bs-target="#password-modal"
+        class="mt-4 btn btn-primary d-block w-100"
+      >
         Change password
         <i class="bi bi-key-fill"></i>
       </button>
-      <button class="mt-3 btn btn-danger d-block w-100">
+
+      <div class="modal fade" id="password-modal">
+        <div class="modal-dialog">
+          <form (submit)="submitPassword()" class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5">Choose a new password</h1>
+              <button
+                (click)="passwordChanged = false"
+                type="reset"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body input-group px-5">
+              <span class="input-group-text">Password</span>
+              <input
+                #password
+                type="password"
+                class="form-control"
+                required
+              >
+            </div>
+            <div class="modal-footer">
+              <div
+                *ngIf="passwordChanged"
+                class="alert text-start alert-primary me-auto p-1 px-2"
+              >
+                <b>Password changed!</b>
+              </div>
+              <button
+                (click)="passwordChanged = false"
+                type="reset"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Close</button>
+              <button class="btn btn-primary">Apply</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <button
+        data-bs-toggle="modal"
+        data-bs-target="#delete-modal"
+        class="mt-3 btn btn-danger d-block w-100"
+      >
         Delete profile
         <i class="bi bi-person-x-fill"></i>
       </button>
+
+      <div class="modal fade" id="delete-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h1 class="modal-title fs-4 me-3">Are you sure you want to delete your profile?</h1>
+              <button type="reset" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button
+                (click)="deleteProfile()"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+              >Delete permanently</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <button class="mt-3 btn btn-secondary d-block w-100">
         Logout
         <i class="bi bi-box-arrow-right"></i>

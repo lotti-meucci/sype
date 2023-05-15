@@ -15,6 +15,7 @@ export class ProfileComponent {
   @ViewChild('nicknameSpan') nicknameSpan!: ElementRef<HTMLSpanElement>;
   @ViewChild('pictureFileInput') pictureFileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('pictureCanvas') pictureCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('password') password?: ElementRef<HTMLInputElement>;
   private _nickname!: string;
   prevEditingNickname!: string;
   isMine = false;
@@ -25,6 +26,7 @@ export class ProfileComponent {
   pictureToken = 0;
   showingPictureError = false;
   pictureErrorMessage = '';
+  passwordChanged = false;
 
   set nickname(v: string) {
     this.prevEditingNickname = v;
@@ -186,5 +188,27 @@ export class ProfileComponent {
   refreshPicture() {
     this.pictureToken++;
     this.changeDetector.detectChanges();
+  }
+
+  submitPassword() {
+    if (this.password)
+    {
+      this.api.patchUser(
+        this.nickname,
+        { password: this.password.nativeElement.value }
+      ).subscribe(() => {
+        this.passwordChanged = true;
+        this.password!.nativeElement.value = '';
+      });
+    }
+
+    return false;
+  }
+
+  deleteProfile() {
+    this.api.deleteUser(this.nickname).subscribe(() => {
+      this.router.config = defaultRoutes;
+      this.router.navigateByUrl('/');
+    })
   }
 }

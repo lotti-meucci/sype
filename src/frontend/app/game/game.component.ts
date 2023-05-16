@@ -27,11 +27,26 @@ const quotes = [
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
+  @ViewChild('textarea') textarea?: ElementRef<HTMLTextAreaElement>;
+  private _playing!: boolean;
   randomQuote = '';
+  hideMenu = false;
+  hideGame = true;
   selectedDifficultyLevel!: number;
   difficulties: Difficulty[] = [];
 
-  constructor(private api: SypeApiService){
+  set playing(v: boolean) {
+    sessionStorage.setItem('playing', String(v));
+    this._playing = v;
+  }
+
+  get playing(): boolean {
+    return this._playing;
+  }
+
+  constructor(private api: SypeApiService) {
+    this.playing = false;
+
     this.api.getDifficulties().subscribe(data => {
       let i = 0;
 
@@ -47,5 +62,14 @@ export class GameComponent {
     });
 
     this.randomQuote = quotes.sort(() => Math.random() - .5)[0];
+  }
+
+  startGame() {
+    this.hideMenu = true;
+
+    setTimeout(() => {
+      this.playing = true;
+      setTimeout(() => this.hideGame = false, 50);
+    }, 250);
   }
 }

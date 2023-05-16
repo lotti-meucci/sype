@@ -1,38 +1,47 @@
 <div class="container p-5">
-  <div class="text-center mb-5">
-    <h1 class="display-1">Wanna start a new game?</h1>
-    <h2 class="dancing display-5">{{randomQuote}}</h2>
-  </div>
+  <div class="hideable" [class.hidden]="hideMenu" *ngIf="!playing">
+    <div class="text-center mb-5">
+      <h1 class="display-1">Wanna start a new game?</h1>
+      <h2 class="dancing display-5">{{randomQuote}}</h2>
+    </div>
 
-  <div
-    id="difficulties"
-    class="mx-auto width-max-content"
-    *ngFor="let difficulty of difficulties"
-  >
-    <button
-      (click)="selectedDifficultyLevel = difficulty.level"
-      attr.data-tip="{{difficulty.wordsNumber}} words"
-      class="tip-on-hover text-white mb-4 btn d-block difficulty {{difficulty.colorClass}}"
-      [class.fw-bold]="selectedDifficultyLevel == difficulty.level"
+    <div
+      id="difficulties"
+      class="mx-auto width-max-content"
+      *ngFor="let difficulty of difficulties"
     >
-      {{difficulty.description}}
-      <i
-        class="
-          d-inline-block
-          bi
-          bi-{{difficulty.level}}-circle{{
-            selectedDifficultyLevel == difficulty.level ?
-              '-fill' : ''
-          }}
-        "
-      ></i>
-    </button>
+      <button
+        (click)="selectedDifficultyLevel = difficulty.level"
+        attr.data-tip="{{difficulty.wordsNumber}} words"
+        class="tip-on-hover text-white mb-4 btn d-block difficulty {{difficulty.colorClass}}"
+        [class.fw-bold]="selectedDifficultyLevel == difficulty.level"
+      >
+        {{difficulty.description}}
+        <i
+          class="
+            d-inline-block
+            bi
+            bi-{{difficulty.level}}-circle{{
+              selectedDifficultyLevel == difficulty.level ?
+                '-fill' : ''
+            }}
+          "
+        ></i>
+      </button>
+    </div>
+
+    <div class="pt-2 mx-auto width-max-content">
+      <button (click)="startGame()" class="tip-on-hover btn btn-primary play">
+        <span>PLAY</span>
+        <i class="ms-3 bi bi-play"></i>
+      </button>
+    </div>
   </div>
 
-  <div class="pt-2 mx-auto width-max-content">
-    <button class="tip-on-hover btn btn-primary play">
-      <span>PLAY</span>
-      <i class="ms-3 bi bi-play"></i>
-    </button>
+  <div class="hideable" [class.hidden]="hideGame" *ngIf="playing">
+    <div class="card card-body mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi dolorum deserunt itaque ipsam, hic nemo atque consectetur tempora sint eveniet voluptate expedita perferendis nihil iure labore soluta nesciunt modi nulla!</div>
+    <form>
+      <textarea autofocus class="form-control" #textarea></textarea>
+    </form>
   </div>
 </div>

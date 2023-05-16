@@ -8,6 +8,10 @@
   }
 }
 
+textarea {
+  resize: none;
+  height: 17rem;
+}
 
 #difficulties button i {
   transition: transform 150ms;

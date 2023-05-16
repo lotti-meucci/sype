@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { authRoutes } from './app-routing.module';
 
 @Component({
@@ -9,6 +9,10 @@ import { authRoutes } from './app-routing.module';
 })
 export class AppComponent {
   title = 'Sype!';
+
+  get playing(): boolean {
+    return sessionStorage.getItem('playing') == 'true';
+  }
 
   constructor(private router: Router) {}
 

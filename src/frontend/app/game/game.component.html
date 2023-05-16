@@ -1,30 +1,21 @@
-<br>
-<div #levels class="container width-max-content">
-  <button
-    [attr.data-tip]="'20 Words'"
-    class="tip-on-hover mt-4 btn btn-success d-block w-100 difficulty">
-    Level
-    <i class="bi bi-1-circle"></i>
-  </button>
+<div class="container p-5">
+  <div
+    class="mx-auto width-max-content"
+    *ngFor="let difficulty of difficulties"
+  >
+    <button
+      [attr.data-tip]="'20 Words'"
+      class="tip-on-hover mb-4 btn btn-success d-block w-100 difficulty"
+    >
+      {{difficulty.description}}
+      <i class="bi bi-1-circle"></i>
+    </button>
+  </div>
 
-  <button
-    [attr.data-tip]="'40 Words'"
-    class="tip-on-hover mt-4 btn btn-warning d-block w-100 difficulty text-white">
-    Level
-    <i class="bi bi-2-circle"></i>
-  </button>
-
-  <button
-    [attr.data-tip]="'60 Words'"
-    class="tip-on-hover mt-4 btn btn-danger d-block w-100 difficulty text-white">
-    Level
-    <i class="bi bi-3-circle"></i>
-  </button>
-</div>
-
-<div class="container">
-  <button class="tip-on-hover mt-4 btn btn-primary d-block mx-auto play border-light-secondary">
-    PLAY
-    <i class="bi bi-play"></i>
-  </button>
+  <div class="pt-2 mx-auto width-max-content">
+    <button class="tip-on-hover btn btn-primary play border-light-secondary">
+      <span>PLAY</span>
+      <i class="ms-3 bi bi-play"></i>
+    </button>
+  </div>
 </div>

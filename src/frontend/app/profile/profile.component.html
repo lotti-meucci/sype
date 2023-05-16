@@ -49,7 +49,7 @@
         <i class="bi bi-key-fill"></i>
       </button>
 
-      <div class="modal fade" id="password-modal">
+      <div class="modal fade" id="password-modal" data-bs-backdrop="static">
         <div class="modal-dialog">
           <form (submit)="submitPassword()" class="modal-content">
             <div class="modal-header">
@@ -72,6 +72,7 @@
             </div>
             <div class="modal-footer">
               <div
+                [class.shake]="shakePasswordAlert"
                 *ngIf="passwordChanged"
                 class="alert text-start alert-primary me-auto p-1 px-2"
               >
@@ -98,7 +99,7 @@
         <i class="bi bi-person-x-fill"></i>
       </button>
 
-      <div class="modal fade" id="delete-modal">
+      <div class="modal fade" id="delete-modal" data-bs-backdrop="static">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header border-0">
@@ -120,7 +121,7 @@
       <button
         class="mt-3 btn btn-secondary d-block w-100"
         (click)="logout()"
-        >
+      >
         Logout
         <i class="bi bi-box-arrow-right"></i>
       </button>

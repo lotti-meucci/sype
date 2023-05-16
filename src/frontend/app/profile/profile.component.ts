@@ -21,6 +21,7 @@ export class ProfileComponent {
   isMine = false;
   randomToken = 0;
   shakeNickname = false;
+  shakePasswordAlert = false;
   showingNicknameError = false;
   nicknameErrorMessage = '';
   pictureToken = 0;
@@ -60,7 +61,7 @@ export class ProfileComponent {
   }
 
   logout() {
-    this.api.postLogout(this.nickname).subscribe(() => {
+    this.api.postLogout().subscribe(() => {
       this.router.config = defaultRoutes;
       this.router.navigateByUrl('/');
     })
@@ -114,6 +115,11 @@ export class ProfileComponent {
   startShakeNickname() {
     this.shakeNickname = false;
     setTimeout(() => this.shakeNickname = true, 100)
+  }
+
+  startShakePasswordAlert() {
+    this.shakePasswordAlert = false;
+    setTimeout(() => this.shakePasswordAlert = true, 100)
   }
 
   showNicknameError(message: string) {
@@ -205,6 +211,7 @@ export class ProfileComponent {
         { password: this.password.nativeElement.value }
       ).subscribe(() => {
         this.passwordChanged = true;
+        this.startShakePasswordAlert();
         this.password!.nativeElement.value = '';
       });
     }

@@ -1,11 +1,42 @@
-.play{
+@keyframes giggle {
+  from {
+    transform: rotate(2.5deg);
+  }
+
+  to {
+    transform: rotate(-2.5deg);
+  }
+}
+
+.play {
   font-size: 2.5rem;
   width: 17rem;
 }
 
-.play:hover{
-  color: var(--success);
-  background: var(--warning);
+.play:hover {
+  animation: giggle 250ms infinite alternate linear;
+}
+
+.play > * {
+  display: inline-block;
+  transition: filter 150ms, transform 150ms;
+  transition-timing-function: cubic-bezier(0.295, 1.650, 0.410, 1.650);
+}
+
+.play > :last-child {
+  transform-origin: center left;
+}
+
+.play:hover > * {
+  filter: drop-shadow(0 0 .35rem white);
+}
+
+.play:hover > :first-child {
+  transform: scale(1.1);
+}
+
+.play:hover > :last-child {
+  transform: scale(1.2);
 }
 
 .difficulty{

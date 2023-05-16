@@ -3,6 +3,7 @@ import { Injectable, isDevMode } from '@angular/core';
 import { NicknameResponse } from 'app/interfaces/nickname-response';
 import { CredentialsRequest } from 'app/interfaces/credentials-request';
 import { Observable } from 'rxjs';
+import { Difficulty } from 'app/interfaces/difficulty';
 
 const CONFIG = { withCredentials: true };
 
@@ -25,11 +26,8 @@ export class SypeApiService {
     return this.http.post(this.prefix + '/login.php', credentials, CONFIG);
   }
 
-  postLogout(user: string): Observable<unknown>{
-    return this.http.post(
-      this.prefix + '/logout.php',
-      { ...CONFIG, params: new HttpParams().set('user', user) }
-    );
+  postLogout(): Observable<unknown> {
+    return this.http.post(this.prefix + '/logout.php', CONFIG);
   }
 
   putUser(credentials: CredentialsRequest): Observable<unknown> {
@@ -51,7 +49,7 @@ export class SypeApiService {
     );
   }
 
-  putPicture(user: string, png: Blob) {
+  putPicture(user: string, png: Blob): Observable<unknown> {
     return this.http.put(
       this.prefix + '/pictures.php',
       png,
@@ -59,7 +57,7 @@ export class SypeApiService {
     );
   }
 
-  patchPicture(user: string, png: Blob) {
+  patchPicture(user: string, png: Blob): Observable<unknown> {
     return this.http.patch(
       this.prefix + '/pictures.php',
       png,
@@ -69,5 +67,9 @@ export class SypeApiService {
 
   toPictureUrl(nickaname: string) {
     return `${this.prefix}/pictures.php?user=${nickaname}`;
+  }
+
+  getDifficulties(): Observable<Difficulty[]> {
+    return this.http.get<Difficulty[]>(this.prefix + '/difficulties.php', CONFIG);
   }
 }

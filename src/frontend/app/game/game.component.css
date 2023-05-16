@@ -8,6 +8,15 @@
   }
 }
 
+
+#difficulties button i {
+  transition: transform 150ms;
+}
+
+#difficulties button:active i {
+  transform: scale(.75);
+}
+
 .play {
   font-size: 2.5rem;
   width: 17rem;
@@ -20,6 +29,8 @@
 .play > * {
   display: inline-block;
   transition: filter 150ms, transform 150ms;
+
+  /* https://tools.webdevpuneet.com/css-easing-generator */
   transition-timing-function: cubic-bezier(0.295, 1.650, 0.410, 1.650);
 }
 

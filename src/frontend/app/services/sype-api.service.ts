@@ -4,6 +4,8 @@ import { NicknameResponse } from 'app/interfaces/nickname-response';
 import { CredentialsRequest } from 'app/interfaces/credentials-request';
 import { Observable } from 'rxjs';
 import { Difficulty } from 'app/interfaces/difficulty';
+import { TextResponse } from 'app/interfaces/text-response';
+import { DifficultyRequest } from 'app/interfaces/difficulty-request';
 
 const CONFIG = { withCredentials: true };
 
@@ -71,5 +73,9 @@ export class SypeApiService {
 
   getDifficulties(): Observable<Difficulty[]> {
     return this.http.get<Difficulty[]>(this.prefix + '/difficulties.php', CONFIG);
+  }
+
+  postStartGame(difficulty: DifficultyRequest): Observable<TextResponse> {
+    return this.http.post<TextResponse>(this.prefix + '/startGame.php', difficulty, CONFIG);
   }
 }

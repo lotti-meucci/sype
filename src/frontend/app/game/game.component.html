@@ -11,10 +11,10 @@
       *ngFor="let difficulty of difficulties"
     >
       <button
-        (click)="selectedDifficultyLevel = difficulty.level"
+        (click)="selectedDifficulty = difficulty"
         attr.data-tip="{{difficulty.wordsNumber}} words"
-        class="tip-on-hover text-white mb-4 btn d-block difficulty {{difficulty.colorClass}}"
-        [class.fw-bold]="selectedDifficultyLevel == difficulty.level"
+        class="tip-on-hover text-white mb-4 btn d-block difficulty btn-{{difficulty.color}}"
+        [class.fw-bold]="selectedDifficulty.level == difficulty.level"
       >
         {{difficulty.description}}
         <i
@@ -22,7 +22,7 @@
             d-inline-block
             bi
             bi-{{difficulty.level}}-circle{{
-              selectedDifficultyLevel == difficulty.level ?
+              selectedDifficulty.level == difficulty.level ?
                 '-fill' : ''
             }}
           "
@@ -39,9 +39,34 @@
   </div>
 
   <div class="hideable" [class.hidden]="hideGame" *ngIf="playing">
-    <div class="card card-body mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi dolorum deserunt itaque ipsam, hic nemo atque consectetur tempora sint eveniet voluptate expedita perferendis nihil iure labore soluta nesciunt modi nulla!</div>
+    <div class="card card-body mb-4 user-select-none">{{randomText}}</div>
     <form>
-      <textarea autofocus class="form-control" #textarea></textarea>
+      <textarea
+        autofocus
+        class="form-control"
+        spellcheck="false"
+        (paste)="onTextareaPaste()"
+        #textarea
+      ></textarea>
     </form>
+
+    <div
+      [class.hidden]="hideStartAlert"
+
+      class="
+        hideable
+        shadow-sm
+        card
+        card-body
+        position-fixed
+        translate-middle
+        bottom-0
+        start-50
+        display-1
+        text-white
+        fw-bold
+        bg-{{selectedDifficulty.color}}
+      "
+    >Start!</div>
   </div>
 </div>

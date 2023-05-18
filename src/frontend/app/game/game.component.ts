@@ -2,10 +2,10 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Difficulty } from 'app/interfaces/difficulty';
 import { SypeApiService } from 'app/services/sype-api.service';
 
-const colorClasses = [
-  "btn-success",
-  "btn-warning",
-  "btn-danger",
+const color = [
+  "success",
+  "warning",
+  "danger",
 ]
 
 const quotes = [
@@ -30,9 +30,11 @@ export class GameComponent {
   @ViewChild('textarea') textarea?: ElementRef<HTMLTextAreaElement>;
   private _playing!: boolean;
   randomQuote = '';
+  randomText = '';
   hideMenu = false;
   hideGame = true;
-  selectedDifficultyLevel!: number;
+  hideStartAlert = false;
+  selectedDifficulty!: Difficulty;
   difficulties: Difficulty[] = [];
 
   set playing(v: boolean) {
@@ -51,13 +53,13 @@ export class GameComponent {
       let i = 0;
 
       for (const difficulty of data) {
-        if (i >= colorClasses.length)
+        if (i >= color.length)
           i = 0;
 
-        difficulty.colorClass = colorClasses[i++];
+        difficulty.color = color[i++];
       }
 
-      this.selectedDifficultyLevel = data[0].level;
+      this.selectedDifficulty = data[0];
       this.difficulties = data;
     });
 
@@ -69,7 +71,19 @@ export class GameComponent {
 
     setTimeout(() => {
       this.playing = true;
-      setTimeout(() => this.hideGame = false, 50);
+      this.loadGame();
     }, 250);
+  }
+
+  loadGame() {
+    this.api.postStartGame({ difficulty: this.selectedDifficulty.level }).subscribe(data => {
+      this.randomText = data.text;
+      this.hideGame = false;
+      setTimeout(() => this.hideStartAlert = true, 1000);
+    })
+  }
+
+  onTextareaPaste() {
+    return false;
   }
 }

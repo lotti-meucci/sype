@@ -101,7 +101,6 @@ export class GameComponent {
       const res = data as ErrorsNumberResponse;
       this.gameErrorsNumber = res.errorsNumber;
       const modal = new bootstrap.Modal(this.resultModal!.nativeElement);
-      console.log(modal);
       modal.show();
     });
   }

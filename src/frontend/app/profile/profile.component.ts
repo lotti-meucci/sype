@@ -22,12 +22,11 @@ export class ProfileComponent {
   private _nickname!: string;
   prevEditingNickname!: string;
   isMine = false;
-  randomToken = 0;
   shakeNickname = false;
   shakePasswordAlert = false;
   showingNicknameError = false;
   nicknameErrorMessage = '';
-  pictureToken = 0;
+  pictureSeed = 0;
   showingPictureError = false;
   pictureErrorMessage = '';
   passwordChanged = false;
@@ -220,7 +219,7 @@ export class ProfileComponent {
   }
 
   refreshPicture() {
-    this.pictureToken++;
+    this.pictureSeed++;
     this.changeDetector.detectChanges();
   }
 

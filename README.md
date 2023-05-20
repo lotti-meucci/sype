@@ -6,7 +6,7 @@
 
 ## Working with the project
 
-Run `./run.ps1` or `./run.sh` to build and host the project with docker.
+Run `run.cmd` or `./run.sh` to build and host the project with docker.
 
 The password of the dockerized MariaDB is located in two different files:
 - [MARIADB_ROOT_PASSWORD.env](./docker/MARIADB_ROOT_PASSWORD.env) (MariaDB configuration)
@@ -73,10 +73,3 @@ _game_(**id**, user_id*, difficulty_id*, datetime, result, errors_n)
 | /rankings.php?difficulty=_level_ | GET                     | Get rankings by difficulty                      | JSON |
 - [Usage](./tests/)
 - [Routes logic](./src/api/)
-
-
-
-## Extras
-
-- Random name generator (using sype.word table)
-- User research + dropdown

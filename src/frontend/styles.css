@@ -151,6 +151,31 @@ body {
   transform: translate(50%, -100%) scale(1);
 }
 
+
+/* Scrollbars */
+
+* {
+  scroll-behavior: smooth;
+  scroll-padding-top: .5rem;
+  scrollbar-color: #0025 transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: .5rem;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background: #0025;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0027;
+}
+
+
 @media (max-width: 576px) {
   body {
     display: none;

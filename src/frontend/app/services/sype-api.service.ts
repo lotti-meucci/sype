@@ -111,4 +111,11 @@ export class SypeApiService {
       { ...CONFIG, params: new HttpParams().set('user', user) }
     );
   }
+
+  getRankings(difficulty: number): Observable<Game[]> {
+    return this.http.get<Game[]>(
+      this.prefix + '/rankings.php',
+      { ...CONFIG, params: new HttpParams().set('difficulty', difficulty) }
+    );
+  }
 }

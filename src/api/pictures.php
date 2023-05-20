@@ -39,10 +39,12 @@ switch ($_SERVER['REQUEST_METHOD'])
       exit;
     }
 
+    $user_id;
+
     // If the user does not exist, sends a Not Found status code.
     try
     {
-      if (!user_exist($db, $_GET['user']))
+      if (!user_exist($db, $_GET['user'], $user_id))
       {
         http_response_code(NOT_FOUND);
         exit;
@@ -54,7 +56,6 @@ switch ($_SERVER['REQUEST_METHOD'])
       exit;
     }
 
-    $user_id = $_SESSION['user'];
     http_response_code(OK);
 
     // Tries to echo the required picture.

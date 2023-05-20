@@ -11,6 +11,7 @@ import { RankingsComponent } from './rankings/rankings.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { ProfilePictureComponent } from './profile-picture/profile-picture.component';
+import { GameResultComponent } from './game-result/game-result.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ProfilePictureComponent } from './profile-picture/profile-picture.compo
     RankingsComponent,
     ProfileComponent,
     LoginComponent,
-    ProfilePictureComponent
+    ProfilePictureComponent,
+    GameResultComponent
   ],
   imports: [
     BrowserModule,

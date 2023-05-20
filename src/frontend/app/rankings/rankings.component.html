@@ -23,5 +23,12 @@
       </span>
     </li>
   </ul>
-  <div id="line" class="bg-white border rounded-bottom border-top-0"></div>
+  <div class="bg-white border rounded-bottom border-top-0">
+    <app-game-result
+      [game]="game"
+      [first]="isFirst"
+      [position]="i + 1"
+      *ngFor="let game of games; index as i; first as isFirst"
+    ></app-game-result>
+  </div>
 </div>

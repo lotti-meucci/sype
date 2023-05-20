@@ -2,6 +2,10 @@
   max-width: 60rem;
 }
 
+#games-container {
+  min-height: 1rem;
+}
+
 .nav-link {
   transition: box-shadow 150ms;
 }

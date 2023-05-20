@@ -6,8 +6,7 @@
     </div>
 
     <div
-      id="difficulties"
-      class="mx-auto width-max-content"
+      class="difficulty-container mx-auto width-max-content"
       *ngFor="let difficulty of difficulties"
     >
       <button
@@ -39,25 +38,43 @@
   </div>
 
   <div class="hideable" [class.hidden]="hideGame" *ngIf="playing">
-    <div class="card card-body mb-4 user-select-none">{{randomText}}</div>
+    <div class="card mb-4 user-select-none">
+      <div class="card-header fw-bold text-{{selectedDifficulty.color}}">
+        Fast! Rewrite this text
+      </div>
+      <div class="card-body ">
+        {{randomText}}
+      </div>
+    </div>
     <form>
       <textarea
         autofocus
         class="form-control"
         spellcheck="false"
-        (paste)="onTextareaPaste()"
+        (paste)="onTextAreaPaste()"
+        (input)="textAreaInput()"
         #textarea
       ></textarea>
+      <div class="d-flex p-1">
+        <b class="text-muted">Press enter to end the game</b>
+        <span class="ms-auto">{{gameCurrentSeconds | number : '.1'}}</span>
+      </div>
     </form>
+
+
+    <button (click)="cancelGame()" class="btn btn-primary mt-3 d-block m-auto">
+      Cancel the game
+    </button>
 
     <div
       [class.hidden]="hideStartAlert"
 
       class="
         hideable
-        shadow-sm
+        shadow
         card
         card-body
+        rounded-pill
         position-fixed
         translate-middle
         bottom-0
@@ -68,5 +85,36 @@
         bg-{{selectedDifficulty.color}}
       "
     >Start!</div>
+  </div>
+</div>
+
+<div
+  *ngIf="playing"
+  (hidden.bs.modal)="closeGameMode()"
+  class="modal modal-sm fade"
+  data-bs-backdrop="static"
+  #resultModal
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Game result</h1>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body fs-1 fw-bold">
+        <div class="text-success">{{gameEndSeconds | number : '.1'}}s</div>
+        <div class="text-danger">
+          <span [class.text-success]="gameErrorsNumber == 0">
+            {{gameErrorsNumber}} errors
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn text-white btn-primary"
+          data-bs-dismiss="modal"
+        >Ok</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -33,4 +33,14 @@ class NicknameResponse
   }
 }
 
+class ErrorsNumberResponse
+{
+  public readonly string $errorsNumber;
+
+  function __construct(string $errorsNumber)
+  {
+    $this->errorsNumber = $errorsNumber;
+  }
+}
+
 ?>

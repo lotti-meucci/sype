@@ -174,7 +174,7 @@ function check_result(object $body): void
     exit_json(new ErrorResponse('"result" is not defined'), BAD_REQUEST);
 
   // Type check (must be float).
-  if (!is_float($body->result) || $body->result <= 0)
+  if (!is_float($body->result) && !is_int($body->result) || $body->result <= 0)
     exit_json(new ErrorResponse('"result" must be a positive float'), BAD_REQUEST);
 }
 

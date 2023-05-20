@@ -6640,6 +6640,7 @@ INSERT IGNORE INTO word(text) VALUES
   ("synopsis"),
   ("synthesis"),
   ("synthetic"),
+  ("sype"),
   ("syrup"),
   ("system"),
   ("t-shirt"),

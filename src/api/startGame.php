@@ -13,17 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] != "POST")
   exit;
 }
 
+kill_game();
 $db = get_database();
 check_login($db);
 $body = get_json_body();
 check_difficulty($body);
-
-// Checks if there is already a game ongoing.
-if(isset($_SESSION['game_difficulty']))
-{
-  http_response_code(CONFLICT);
-  exit;
-}
 
 $stmt = get_words_number_by_difficulty_stmt($db);
 $difficulty = $body->difficulty;

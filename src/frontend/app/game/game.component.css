@@ -13,11 +13,11 @@ textarea {
   height: 17rem;
 }
 
-#difficulties button i {
+.difficulty-container button i {
   transition: transform 150ms;
 }
 
-#difficulties button:active i {
+.difficulty-container button:active i {
   transform: scale(.75);
 }
 
@@ -61,5 +61,6 @@ textarea {
 [data-tip]::before{
   background-color: grey;
   font-size: 1rem;
+  font-weight: normal;
   width: max-content;
 }

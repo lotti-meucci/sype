@@ -1,12 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Difficulty } from 'app/interfaces/difficulty';
+import { Difficulty } from 'app/types/difficulty';
 import { SypeApiService } from 'app/services/sype-api.service';
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
+import { ErrorsNumberResponse } from 'app/types/errors-number-response';
 
-const color = [
-  "success",
-  "warning",
-  "danger",
-]
+declare const bootstrap: any;
 
 const quotes = [
   '"If you\'re in control, you\'re not going fast enough." ~ Parnelli Jones',
@@ -28,6 +27,7 @@ const quotes = [
 })
 export class GameComponent {
   @ViewChild('textarea') textarea?: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('resultModal') resultModal?: ElementRef<HTMLElement>
   private _playing!: boolean;
   randomQuote = '';
   randomText = '';
@@ -36,6 +36,11 @@ export class GameComponent {
   hideStartAlert = false;
   selectedDifficulty!: Difficulty;
   difficulties: Difficulty[] = [];
+  timerInterval?: any;
+  gameStartTime: number = 0;
+  gameCurrentSeconds: number = 0;
+  gameEndSeconds: number = 0;
+  gameErrorsNumber: number = 0;
 
   set playing(v: boolean) {
     sessionStorage.setItem('playing', String(v));
@@ -50,15 +55,6 @@ export class GameComponent {
     this.playing = false;
 
     this.api.getDifficulties().subscribe(data => {
-      let i = 0;
-
-      for (const difficulty of data) {
-        if (i >= color.length)
-          i = 0;
-
-        difficulty.color = color[i++];
-      }
-
       this.selectedDifficulty = data[0];
       this.difficulties = data;
     });
@@ -71,19 +67,78 @@ export class GameComponent {
 
     setTimeout(() => {
       this.playing = true;
-      this.loadGame();
+      this.loadGameData();
     }, 250);
   }
 
-  loadGame() {
+  loadGameData() {
     this.api.postStartGame({ difficulty: this.selectedDifficulty.level }).subscribe(data => {
       this.randomText = data.text;
       this.hideGame = false;
-      setTimeout(() => this.hideStartAlert = true, 1000);
+      this.gameDataLoaded();
+      setTimeout(() => this.hideStartAlert = true, 1250);
     })
   }
 
-  onTextareaPaste() {
+  gameDataLoaded() {
+    if (this.timerInterval)
+      clearInterval(this.timerInterval);
+
+    this.gameStartTime = Date.now();
+    this.gameCurrentSeconds = 0;
+    this.timerInterval = setInterval(() => this.gameCurrentSeconds = this.getResult());
+  }
+
+  endGame(text: string) {
+    this.gameEndSeconds = this.getResult();
+
+    this.api.postEndGame({ result: this.gameEndSeconds, text: text }).pipe(
+      catchError(() => {
+        this.cancelGame();
+        return '';
+      })
+    ).subscribe(data => {
+      const res = data as ErrorsNumberResponse;
+      this.gameErrorsNumber = res.errorsNumber;
+      const modal = new bootstrap.Modal(this.resultModal!.nativeElement);
+      console.log(modal);
+      modal.show();
+    });
+  }
+
+  closeGameMode() {
+    this.playing = false;
+    setTimeout(() => this.hideMenu = false, 100);
+  }
+
+  onTextAreaPaste() {
     return false;
+  }
+
+  textAreaInput() {
+    const text = this.textarea!.nativeElement.value;
+
+    if (text.match(/[\n\r]/)) {
+      this.hideGame = true;
+      clearInterval(this.timerInterval!);
+      this.timerInterval = null;
+      this.endGame(text);
+    }
+  }
+
+  cancelGame() {
+    if (this.timerInterval)
+    {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+
+    this.playing = false;
+    this.hideGame = true;
+    this.hideMenu = false;
+  }
+
+  getResult(): number {
+    return Math.trunc((Date.now() - this.gameStartTime) / 100) / 10;
   }
 }

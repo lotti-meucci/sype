@@ -14,7 +14,12 @@ export class AppComponent {
     return sessionStorage.getItem('playing') == 'true';
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    router.events.subscribe(() => {
+      if (router.url != '/play')
+      sessionStorage.setItem('playing', String(false));
+    });
+  }
 
   getRoute(): string {
     return this.router.url.split('/')[1];

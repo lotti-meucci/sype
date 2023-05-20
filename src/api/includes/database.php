@@ -192,7 +192,12 @@ function get_rankings_stmt(mysqli $db): mysqli_stmt
 // No params.
 function get_all_games_stmt(mysqli $db): mysqli_stmt
 {
-  return $db->prepare('SELECT u.nickname, g.datetime, g.result, g.errors_n errorsNumber
+  return $db->prepare('SELECT
+                         u.nickname,
+                         g.datetime,
+                         g.result,
+                         g.errors_n errorsNumber,
+                         g.difficulty_id difficulty
                        FROM game g
                        JOIN user u ON g.user_id = u.id
                        ORDER BY g.datetime DESC');
@@ -201,7 +206,12 @@ function get_all_games_stmt(mysqli $db): mysqli_stmt
 // Params: nickname (string).
 function get_user_games_stmt(mysqli $db): mysqli_stmt
 {
-  return $db->prepare('SELECT u.nickname, g.datetime, g.result, g.errors_n errorsNumber
+  return $db->prepare('SELECT
+                         u.nickname,
+                         g.datetime,
+                         g.result,
+                         g.errors_n errorsNumber,
+                         g.difficulty_id difficulty
                        FROM game g
                        JOIN user u ON g.user_id = u.id
                        WHERE u.nickname = ?

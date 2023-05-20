@@ -36,7 +36,7 @@ $result = $body->result;
 $stmt->bind_param('iidi', $_SESSION['user'], $_SESSION['game_difficulty'], $result, $errors);
 safe_execute($stmt);
 kill_game();
-http_response_code(OK);
+exit_json(new ErrorsNumberResponse($errors), OK);
 exit;
 
 ?>

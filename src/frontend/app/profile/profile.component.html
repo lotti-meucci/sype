@@ -50,7 +50,7 @@
       </button>
 
       <div class="modal fade" id="password-modal" data-bs-backdrop="static">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
           <form (submit)="submitPassword()" class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5">Choose a new password</h1>
@@ -100,13 +100,13 @@
       </button>
 
       <div class="modal fade" id="delete-modal" data-bs-backdrop="static">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header border-0">
-              <h1 class="modal-title fs-4 me-3">Are you sure you want to delete your profile?</h1>
-              <button type="reset" class="btn-close" data-bs-dismiss="modal"></button>
+              <h1 class="modal-title fs-4 me-1">Are you sure you want to delete your profile?</h1>
+              <button type="reset" class="btn-close me-1" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer justify-content-center">
               <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button
                 (click)="deleteProfile()"

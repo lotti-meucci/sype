@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { authRoutes } from 'app/app-routing.module';
-import { ErrorResponse } from 'app/interfaces/error-response';
+import { ErrorResponse } from 'app/types/error-response';
 import { SypeApiService } from 'app/services/sype-api.service';
 import { catchError } from 'rxjs';
 

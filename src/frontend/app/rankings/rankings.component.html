@@ -1,1 +1,27 @@
-<p>rankings works!</p>
+<div class="container p-5">
+  <ul class="nav nav-tabs">
+    <li
+      (click)="selectedDifficulty = difficulty"
+      class="nav-item"
+      *ngFor="let difficulty of difficulties"
+    >
+      <span
+        [class.active]="difficulty.level == selectedDifficulty.level"
+        class="nav-link fw-bold text-{{difficulty.color}}"
+      >
+        {{difficulty.description}}
+        <i
+          class="
+            d-inline-block
+            bi
+            bi-{{difficulty.level}}-circle{{
+              selectedDifficulty.level == difficulty.level ?
+                '-fill' : ''
+            }}
+          "
+        ></i>
+      </span>
+    </li>
+  </ul>
+  <div id="line" class="bg-white border rounded-bottom border-top-0"></div>
+</div>

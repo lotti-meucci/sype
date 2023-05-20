@@ -18,10 +18,23 @@ nav {
   transition: border-color 125ms linear;
 }
 
-ul {
+ul, li {
+  border-color: transparent;
+}
+
+ul li {
   transition: transform 300ms;
 }
 
-ul.hide {
-  transform: translateY(100%);
+ul li:nth-child(2) {
+  transition-delay: 150ms;
+}
+
+ul li:nth-child(3) {
+  transition-delay: 300ms;
+}
+
+ul.hide li {
+  pointer-events: none;
+  transform: translateY(calc(110%));
 }

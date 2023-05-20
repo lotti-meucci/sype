@@ -12,7 +12,7 @@ import { ErrorsNumberResponse } from 'app/types/errors-number-response';
 
 const CONFIG = { withCredentials: true };
 
-const colors = [
+export const colors = [
   "success",
   "warning",
   "danger",

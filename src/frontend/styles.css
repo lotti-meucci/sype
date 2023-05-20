@@ -104,6 +104,10 @@ body {
   background-color: var(--color-light-secondary) !important;
 }
 
+.text-bronze {
+  color: rgb(205, 127, 50) !important;
+}
+
 .border-light-secondary {
   border-color: var(--color-light-secondary) !important;
 }
@@ -133,6 +137,7 @@ body {
   right: 50%;
   transform: translate(50%, -100%) scale(0);
   color: white;
+  background-color: gray;
   padding: 5px;
   border-radius: 5px;
   pointer-events: none;

@@ -1,4 +1,48 @@
-<div [class.border-top]="!first" class="p-4">
-  {{position}}
-  <app-profile-picture [nickname]="game!.nickname"></app-profile-picture>
+<div
+  id="box"
+  [class.border-top]="!first"
+  class="ps-4 pe-0 p-3 d-flex align-items-center position-relative"
+>
+  <div
+    *ngIf="difficultiesData == null"
+    [class.text-warning]="position == 1"
+    [class.text-muted]="position == 2"
+    [class.text-bronze]="position == 3"
+    class="fs-1 me-4 fw-bold position text-center"
+  >{{position}}</div>
+  <a
+    *ngIf="difficultiesData == null"
+    [routerLink]="['/profile', game!.nickname]"
+    id="picture-container"
+    class="text-center text-reset text-decoration-none me-2"
+  >
+    <app-profile-picture class="picture" [nickname]="game!.nickname"></app-profile-picture>
+    <div id="nickname-tip" class="tip-on-hover" [attr.data-tip]="game!.nickname">
+      <div id="nickname-container">
+        {{game!.nickname}}
+      </div>
+    </div>
+  </a>
+
+  <div
+    *ngIf="difficultiesData != null"
+    class="text-center difficulty-container text-{{getDifficultyData(game!.difficulty)!.color}}"
+  >
+    <i class="picture d-inline-block bi bi-{{game!.difficulty}}-circle-fill"></i>
+    <div>
+      {{getDifficultyData(game!.difficulty)!.description}}
+    </div>
+  </div>
+
+  <div class="score text-success fs-1 ms-4 me-3">{{game!.result | number : '.1'}}s</div>
+  <b>|</b>
+  <div class="score text-danger fs-1 ms-3">
+    <span [class.text-success]="game!.errorsNumber == 0">
+      {{game!.errorsNumber}} errors
+    </span>
+  </div>
+
+  <div class="text-black-50 position-absolute end-0 bottom-0 my-2 mx-3">
+    {{game!.datetime}}
+  </div>
 </div>

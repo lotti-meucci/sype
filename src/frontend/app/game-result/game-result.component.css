@@ -1,0 +1,32 @@
+#picture-container {
+  cursor: pointer;
+}
+
+.score {
+  line-height: 1em;
+}
+
+.position {
+  width: 2ch;
+}
+
+.picture {
+  aspect-ratio: 1 / 1;
+  font-size: 5rem;
+  line-height: 5rem;
+  height: 5rem;
+}
+
+.difficulty-container {
+  width: 10ch;
+}
+
+.picture, #nickname-container {
+  width: 5rem;
+}
+
+#nickname-container {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

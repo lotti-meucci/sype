@@ -1,3 +1,7 @@
+.rankings-panel {
+  max-width: 60rem;
+}
+
 .nav-link {
   transition: box-shadow 150ms;
 }

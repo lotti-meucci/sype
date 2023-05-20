@@ -2,6 +2,10 @@ app-profile-picture {
   width: 20rem;
 }
 
+.games-panel {
+  max-width: 50rem;
+}
+
 @keyframes shine {
   from {
     opacity: .6;

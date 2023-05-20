@@ -127,4 +127,17 @@
       </button>
     </div>
   </div>
+
+  <div *ngIf="games.length > 0 " class="mx-auto mt-5 pt-5 games-panel">
+    <h1 class="text-center display-3">Games</h1>
+    <div class="bg-white border rounded">
+      <app-game-result
+        [game]="game"
+        [first]="isFirst"
+        [position]="i + 1"
+        [difficultiesData]="difficulties"
+        *ngFor="let game of games; index as i; first as isFirst"
+      ></app-game-result>
+    </div>
+  </div>
 </div>

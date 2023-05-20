@@ -5,6 +5,9 @@ import { defaultRoutes } from 'app/app-routing.module';
 import { ErrorResponse } from 'app/types/error-response';
 import { SypeApiService } from 'app/services/sype-api.service';
 import { catchError } from 'rxjs';
+import { Difficulty } from 'app/types/difficulty';
+import { Game } from 'app/types/game';
+import { NicknameResponse } from 'app/types/nickname-response';
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +31,9 @@ export class ProfileComponent {
   showingPictureError = false;
   pictureErrorMessage = '';
   passwordChanged = false;
+  selectedDifficulty!: Difficulty;
+  difficulties: Difficulty[] = [];
+  games: Game[] = [];
 
   set nickname(v: string) {
     this.prevEditingNickname = v;
@@ -44,20 +50,35 @@ export class ProfileComponent {
     private route: ActivatedRoute,
     private changeDetector: ChangeDetectorRef
   ) {
-    if ('id' in route.snapshot.params)
+    if ('id' in route.snapshot.params) {
       this.nickname = this.route.snapshot.params['id'];
-    else {
+      this.loadGames();
+    } else {
       api.getLogin().pipe(catchError(() => {
         this.router.config = defaultRoutes;
         this.router.navigateByUrl('/');
         return '';
       })).subscribe(data => {
-        if (typeof data != 'string') {
-          this.nickname = data.nickname;
-          this.isMine = true;
-        }
+        const res = data as NicknameResponse;
+        this.nickname = res.nickname;
+        this.isMine = true;
+        this.loadGames();
       });
     }
+
+    this.api.getDifficulties().subscribe(data => {
+      this.selectedDifficulty = data[0];
+      this.difficulties = data;
+    });
+  }
+
+  loadGames() {
+    this.api.getGames(this.nickname).pipe(
+      catchError(() => {
+        this.router.navigateByUrl('/profile');
+        return '';
+      })
+    ).subscribe(data => this.games = data as Game[]);
   }
 
   logout() {

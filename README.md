@@ -6,13 +6,21 @@
 
 ## Working with the project
 
-Run `run.cmd` or `./run.sh` to build and host the project with docker.
+Project dependencies:
+- Docker `v20.10+`
+- Docker Compose `v1.27.0+`
+- Node.js `v18.16.0+`
+- Angular CLI `v15.0.0+`
+
+Run `run.bat` or `./run.sh` to build and host the project with docker.\
+Run `build.bat` or `./build.sh` to rebuild the project.\
+Run `test.bat` or `./test.sh` to run the project and test the frontend (`ng serve`).
 
 The password of the dockerized MariaDB is located in two different files:
 - [MARIADB_ROOT_PASSWORD.env](./docker/MARIADB_ROOT_PASSWORD.env) (MariaDB configuration)
 - [database.json](./src/api/config/database.json) (PHP database connection configuration)
 
-We recommend to use Visual Studio Code as code editor to work on sype.
+We recommend to use Visual Studio Code as code editor to work on _Sype!_.
 
 
 

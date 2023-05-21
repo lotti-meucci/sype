@@ -1,4 +1,4 @@
 @echo off
-call ".\build.cmd"
+call ".\build.bat"
 cd docker
 call docker compose up

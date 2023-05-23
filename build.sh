@@ -1,5 +1,5 @@
-chmod -R 777 docker
 mkdir docker/server
+chmod -R 777 docker
 cd src/frontend
 npm i
 ng build

@@ -9,7 +9,6 @@
 Project dependencies:
 - Docker `v20.10+`
 - Docker Compose `v1.27.0+`
-- Node.js `v18.16.0+`
 - Angular CLI `v15.0.0+`
 
 Run `run.bat` or `./run.sh` to build and host the project with docker.\

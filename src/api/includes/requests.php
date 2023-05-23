@@ -3,7 +3,7 @@
 require_once __DIR__ . '/init.php';
 require_once __DIR__ . '/classes.php';
 
-// Patterns
+// Patterns.
 const SPACES = '([ \t\n\r\0\x0B])';
 
 // Sizes.

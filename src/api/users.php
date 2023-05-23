@@ -117,7 +117,7 @@ switch ($_SERVER['REQUEST_METHOD'])
     check_ownership();
 
     // Removes the profile picture.
-    remove_session_png($db);
+    remove_session_png();
 
     // Deletes the user from the database.
     $stmt = delete_user_stmt($db);

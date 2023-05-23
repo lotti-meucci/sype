@@ -5,7 +5,6 @@ require_once __DIR__ . '/includes/classes.php';
 require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/requests.php';
 
-
 kill_game();
 $db = get_database();
 

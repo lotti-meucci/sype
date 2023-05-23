@@ -4,7 +4,6 @@ require_once __DIR__ . '/includes/init.php';
 require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/requests.php';
 
-
 // Allowed methods: POST.
 if ($_SERVER['REQUEST_METHOD'] != "POST")
 {
@@ -23,7 +22,13 @@ check_login($db);
 $body = get_json_body();
 check_result($body);
 check_text($body);
+
+// Splits the submitted text into words.
 $submittedWords = preg_split(SPACES, $body->text, flags: PREG_SPLIT_NO_EMPTY);
+
+
+// Calculates the number of errors.
+
 $gameWords = $_SESSION['game_words'];
 $errors = abs(count($gameWords) - count($submittedWords));
 
@@ -31,12 +36,16 @@ for ($i = 0; $i < count($gameWords) && $i < count($submittedWords); $i++)
   if (strcasecmp($gameWords[$i], $submittedWords[$i]))
     $errors++;
 
+
+// Stores the game record.
 $stmt = create_game_stmt($db);
 $result = $body->result;
 $stmt->bind_param('iidi', $_SESSION['user'], $_SESSION['game_difficulty'], $result, $errors);
 safe_execute($stmt);
+
 kill_game();
+
+// Sends the number of errors back.
 exit_json(new ErrorsNumberResponse($errors), OK);
-exit;
 
 ?>

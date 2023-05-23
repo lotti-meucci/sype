@@ -15,7 +15,6 @@
   // Removes the "Content-Type" header from the response.
   header('Content-Type:');
 
-
   // Every response will be "Forbidden" by default.
   http_response_code(FORBIDDEN);
 

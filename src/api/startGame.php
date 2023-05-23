@@ -4,7 +4,6 @@ require_once __DIR__ . '/includes/init.php';
 require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/requests.php';
 
-
 // Allowed methods: POST.
 if ($_SERVER['REQUEST_METHOD'] != "POST")
 {
@@ -33,13 +32,17 @@ if (!$obj)
   );
 }
 
+// Retrives the requested number of random words.
 $words_n = $obj->words_n;
 $stmt = get_random_words_stmt($db);
 $stmt->bind_param('i', $words_n);
 safe_execute($stmt);
 
+// Stores the game data in the session.
 $_SESSION['game_words'] = fetch_firsts($stmt->get_result());
 $_SESSION['game_difficulty'] = $difficulty;
+
+// Sends a joined string of the words back.
 exit_json(new TextResponse(implode(" ", $_SESSION['game_words'])), OK);
 
 ?>

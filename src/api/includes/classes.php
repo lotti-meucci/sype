@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/init.php';
 
-// Class to be serialized into JSON to describe it.
+// Class to be serialized into JSON to describe an error.
 class ErrorResponse
 {
   public readonly string $message;
@@ -13,6 +13,8 @@ class ErrorResponse
   }
 }
 
+
+// Class to be serialized into JSON to send back a text (game start).
 class TextResponse
 {
   public readonly string $text;
@@ -23,6 +25,7 @@ class TextResponse
   }
 }
 
+// Class to be serialized into JSON to send back a nickname.
 class NicknameResponse
 {
   public readonly string $nickname;
@@ -33,6 +36,7 @@ class NicknameResponse
   }
 }
 
+// Class to be serialized into JSON to send back the number of errors (game ending).
 class ErrorsNumberResponse
 {
   public readonly string $errorsNumber;

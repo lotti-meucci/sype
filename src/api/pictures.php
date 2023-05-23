@@ -16,7 +16,7 @@ switch ($_SERVER['REQUEST_METHOD'])
     check_png_body();
     check_login($db);
     check_ownership();
-    $file = open_session_png($db);
+    $file = open_session_png();
 
     // If the file already exists, closes the stream and sends a Conflict status code
     if ($file)
@@ -68,7 +68,7 @@ switch ($_SERVER['REQUEST_METHOD'])
     check_png_body();
     check_login($db);
     check_ownership();
-    $file = open_session_png($db);
+    $file = open_session_png();
 
     // If the file does NOT exists, sends a Conflict status code.
     if (!$file)
@@ -87,7 +87,7 @@ switch ($_SERVER['REQUEST_METHOD'])
   case 'DELETE':
     check_login($db);
     check_ownership();
-    http_response_code(remove_session_png($db) ? OK : CONFLICT);
+    http_response_code(remove_session_png() ? OK : CONFLICT);
     exit;
 
   default:

@@ -7,7 +7,7 @@
 ## Working with the project
 
 Project dependencies:
-- Docker `v20.10+`
+- Docker Engine `v20.10+`
 - Docker Compose `v1.27.0+`
 - Angular CLI `v15.0.0+`
 
